@@ -13,13 +13,13 @@ function Map() {
     <div className='map'>
       <MapContainer center={center} zoom={17}>
       <LayersControl position="topright">
-        <LayersControl.BaseLayer name="Thunderforest_Landscape">
+        <LayersControl.BaseLayer checked name="Thunderforest_Landscape">
           <TileLayer
             // attribution='&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png" // ?apikey={apikey}
+            url="https://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png" // ?apikey={apikey} {/*TODO: api key}
           />
         </LayersControl.BaseLayer>
-        <LayersControl.BaseLayer checked name="OpenTopoMap"> {/*TODO: zoom level above 17 crashes*/}
+        <LayersControl.BaseLayer name="OpenTopoMap"> {/*TODO: zoom level above 17 crashes*/}
           <TileLayer
             // attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"
@@ -46,12 +46,6 @@ function Map() {
       </LayersControl>
       <Layers />
       </MapContainer>
-      {/* <MapContainer center={[46.8403752, 9.0290986]} zoom={14}>
-        <TileLayer
-          // attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png"
-        />
-      </MapContainer> */}
     </div>
   )
 }
