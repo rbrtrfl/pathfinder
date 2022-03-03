@@ -1,0 +1,24 @@
+ul {
+  list-style-type: none;
+  padding: 0px;
+}
+
+.mytracks-item {
+  padding: 15px;
+  background-color: aquamarine;
+}
+
+.mytracks-selected {
+  padding: 15px;
+  background-color: lightgrey;
+  color: red;
+}
+
+.mytracks-divider {
+  height: 1px;
+  background-color: black;
+}
+
+.bold {
+  font-weight: bold;
+}

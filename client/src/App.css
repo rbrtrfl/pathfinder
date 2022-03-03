@@ -20,14 +20,3 @@
   flex-direction: column;
   justify-content: center;
 }
-
-.mytracks-list {
-  list-style-type: none;
-  padding: 0px;
-  margin: 0px;
-  background-color: aquamarine;
-}
-
-.mytracks-item {
-  background-color: aquamarine;
-}

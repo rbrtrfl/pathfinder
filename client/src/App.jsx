@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import './App.css';
-import MainContainer from './components/MainContainer';
+import {MainContainer} from './components/MainContainer';
 import Menu from './components/Menu';
+
+console.clear();
 
 function App() {
 
-  const [menuItem, setMenuItem]= useState('map');
+  const [menuItem, setMenuItem]= useState('mytracks');
 
   return (
     <div className="app-container">

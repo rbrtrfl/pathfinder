@@ -1,34 +1,36 @@
-import React from 'react'
+import React, { useState } from 'react'
+import GpxParser from 'gpxparser'
 import MyTracksItem from './MyTracksItem'
+import { db } from '../db/db.mocks';
+import './MyTracks.css';
 
 function MyTracks() {
 
-  const mockdata = [
-    {
-      name: 'Tack 1',
-      id: '1'
-    },
-    {
-      name: 'Tack 2',
-      id: '2'
-    },
-    {
-      name: 'Tack 3',
-      id: '3'
-    },
-  ]
+  const [chosen, setChosen] = useState(null);
+  const mockdata = [];
+
+  db.forEach((element, index) => {
+    const gpx = new GpxParser();
+    gpx.parse(element);
+    mockdata.push({
+      index,
+      gpx
+    });
+  });
+  // console.log(mockdata);
+  // const positions = gpx.tracks[0].points.map((p) => [p.lat, p.lon]);
 
   return (
     <div>MyTracks
-      <ul className='mytracks-list'>
+      <ul>
           {mockdata.map((item) => {
             return (
-              <li>
                 <MyTracksItem
-                  key={item.id}
-                  item={item}
+                  key={item.index}
+                  gpx={item.gpx}
+                  active={item === chosen}
+                  setChosen={() => setChosen(item.index)}
                 />
-              </li>
             );
           })}
       </ul>
