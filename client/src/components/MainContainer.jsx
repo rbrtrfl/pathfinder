@@ -9,7 +9,7 @@ const ActiveTrack = createContext();
 
 function MainContainer( { menuItem } ) {
 
-  const [selectedTrack, setSelectedTrack] = useState('');
+  const [selectedTrack, setSelectedTrack] = useState();
   console.log(selectedTrack);
 
   return (

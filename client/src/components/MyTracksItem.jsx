@@ -3,7 +3,6 @@ import { ActiveTrack } from './MainContainer'
 
 function MyTracksItem( { gpx, active, setChosen } ) {
 
-  console.log(active);
   // const { setSelectedTrack } = useContext(ActiveTrack);
 
   return (

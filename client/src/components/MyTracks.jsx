@@ -17,7 +17,6 @@ function MyTracks() {
       gpx
     });
   });
-  // console.log(mockdata);
   // const positions = gpx.tracks[0].points.map((p) => [p.lat, p.lon]);
 
   return (
@@ -28,7 +27,7 @@ function MyTracks() {
                 <MyTracksItem
                   key={item.index}
                   gpx={item.gpx}
-                  active={item === chosen}
+                  active={item.index === chosen}
                   setChosen={() => setChosen(item.index)}
                 />
             );

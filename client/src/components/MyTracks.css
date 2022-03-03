@@ -5,13 +5,11 @@ ul {
 
 .mytracks-item {
   padding: 15px;
-  background-color: aquamarine;
 }
 
 .mytracks-selected {
   padding: 15px;
   background-color: lightgrey;
-  color: red;
 }
 
 .mytracks-divider {
