@@ -1,0 +1,18 @@
+.app-container {
+  background-color: pink;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-container {
+  flex-grow: 1;
+}
+
+.menu-component {
+  height: 100px;
+  background-color: aquamarine;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
