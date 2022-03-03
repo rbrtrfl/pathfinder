@@ -1,16 +1,20 @@
+.leaflet-container {
+  min-height: 90vh;
+}
+
 .app-container {
-  background-color: pink;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
 .main-container {
+  height: 100%;
   flex-grow: 1;
 }
 
 .menu-component {
-  height: 100px;
+  height: 10vh;
   background-color: white;
   display: flex;
   flex-direction: column;
