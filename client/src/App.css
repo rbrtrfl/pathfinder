@@ -11,7 +11,7 @@
 
 .menu-component {
   height: 100px;
-  background-color: aquamarine;
+  background-color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;

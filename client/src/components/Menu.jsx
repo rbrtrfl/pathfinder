@@ -1,14 +1,29 @@
 import React from 'react'
 import './Menu.css'
 
-function Menu( { setMenuItem }) {
+function Menu( { menuItem, setMenuItem }) {
   return (
     <nav>
-      <div onClick={() => setMenuItem('map')}>➤</div>
-      <div onClick={() => setMenuItem('mytracks')}>⌸</div>
-      <div onClick={() => setMenuItem('enroute')}>☡</div>
-      <div onClick={() => setMenuItem('drawroute')}>✎</div>
-      <div onClick={() => setMenuItem('settings')}>⌂</div>
+      <div
+        className={menuItem === 'map' ? 'selected' : ''}
+        onClick={() => setMenuItem('map')}
+      >➤</div>
+      <div
+        className={menuItem === 'mytracks' ? 'selected' : ''}
+        onClick={() => setMenuItem('mytracks')}
+      >••</div>
+      <div
+        className={menuItem === 'enroute' ? 'selected' : ''}
+        onClick={() => setMenuItem('enroute')}
+      >☡</div>
+      <div
+        className={menuItem === 'drawroute' ? 'selected' : ''}
+        onClick={() => setMenuItem('drawroute')}
+      >✎</div>
+      <div
+        className={menuItem === 'settings' ? 'selected' : ''}
+        onClick={() => setMenuItem('settings')}
+      >⌂</div>
     </nav>
   )
 }

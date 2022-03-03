@@ -3,13 +3,16 @@ nav {
   flex-direction: row;
   justify-content: space-around;
   font-size: xx-large;
-  background-color: aquamarine;
+  color: lightgray;
 }
 
 nav div {
   padding: 10px;
-  background-color: grey;
   width: 30px;
   display: flex;
   justify-content: center;
+}
+
+.selected {
+  color: black;
 }

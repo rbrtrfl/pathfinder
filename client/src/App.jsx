@@ -16,6 +16,7 @@ function App() {
       </div>
       <div className='menu-component'>
         <Menu
+          menuItem={menuItem}
           setMenuItem={setMenuItem}
         ></Menu>
       </div>
