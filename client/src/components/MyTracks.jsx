@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import GpxParser from 'gpxparser'
+
 import MyTracksItem from './MyTracksItem'
+import { ActiveTrack } from './MainContainer'
 import { db } from '../db/db.mocks';
 import './MyTracks.css';
 
 function MyTracks() {
 
-  const [chosen, setChosen] = useState(null);
+  const { selectedTrack, setSelectedTrack } = useContext(ActiveTrack);
   const mockdata = [];
 
   db.forEach((element, index) => {
@@ -19,6 +21,14 @@ function MyTracks() {
   });
   // const positions = gpx.tracks[0].points.map((p) => [p.lat, p.lon]);
 
+  function setChosen(item) {
+    if (item.index === selectedTrack.index) {
+      setSelectedTrack({});
+    } else {
+      setSelectedTrack(item);
+    }
+  }
+
   return (
     <div>MyTracks
       <ul>
@@ -27,8 +37,8 @@ function MyTracks() {
                 <MyTracksItem
                   key={item.index}
                   gpx={item.gpx}
-                  active={item.index === chosen}
-                  setChosen={() => setChosen(item.index)}
+                  active={item.index === selectedTrack.index}
+                  setChosen={() => setChosen(item)}
                 />
             );
           })}

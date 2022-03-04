@@ -1,14 +1,10 @@
-import React, { useContext }  from 'react'
-import { ActiveTrack } from './MainContainer'
+import React from 'react'
 
 function MyTracksItem( { gpx, active, setChosen } ) {
-
-  // const { setSelectedTrack } = useContext(ActiveTrack);
 
   return (
     <div>
     <li onClick={setChosen} className={active ? "mytracks-selected" : "mytracks-item"}
-        // return setSelectedTrack(gpx);
        >
       <ul>
         <li>
