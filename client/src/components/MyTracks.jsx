@@ -5,8 +5,9 @@ import MyTracksItem from './MyTracksItem'
 import { ActiveTrack } from './MainContainer'
 import { db } from '../db/db.mocks';
 import './MyTracks.css';
+import L from 'leaflet';
 
-function MyTracks() {
+function MyTracks({ setBounds }) {
 
   const mockdata = [];
 
@@ -22,6 +23,15 @@ function MyTracks() {
   const { selectedTrack, setSelectedTrack } = useContext(ActiveTrack);
 
   function setChosen(item) {
+    let trackSelected = (Object.keys(selectedTrack).length);
+    if (trackSelected) {
+      const track = L.geoJSON(selectedTrack.gpx.toGeoJSON());
+      console.log(track.getBounds());
+      setBounds([
+        [track.getBounds()._southWest.lat, track.getBounds()._southWest.lng],
+        [track.getBounds()._northEast.lat, track.getBounds()._northEast.lng],
+      ]);
+    }
     if (item.index === selectedTrack.index) {
       return setSelectedTrack({});
     }

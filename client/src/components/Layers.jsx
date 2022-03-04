@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
-import { Polyline, Marker, GeoJSON, CircleMarker, SVGOverlay} from 'react-leaflet';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Polyline, Marker, GeoJSON, CircleMarker } from 'react-leaflet';
 import L from 'leaflet';
 
 import { ActiveTrack } from './MainContainer'

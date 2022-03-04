@@ -1,23 +1,23 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useState } from 'react'
 import Layers from './Layers'
 import {
   LayersControl,
   MapContainer,
   TileLayer,
+  Rectangle,
 } from 'react-leaflet'
-import { ActiveTrack } from './MainContainer'
 
 
-function Map() {
-
-  // const { selectedTrack, setSelectedTrack } = useContext(ActiveTrack);
+function Map({ bounds }) {
 
   const center = [46.8403752, 9.0290986]
-  // const center = [51.505, -0.09]
+  console.log('bounds: ', bounds)
 
   return (
     <div className='map'>
-      <MapContainer center={center} zoom={14}>
+      <MapContainer bounds={bounds}>
+      <Rectangle bounds={bounds} pathOptions={{color: 'blue'}} />
+      <Layers/>
       <LayersControl position="topright">
         <LayersControl.BaseLayer checked name="Thunderforest_Landscape">
           <TileLayer
@@ -50,7 +50,6 @@ function Map() {
           />
         </LayersControl.BaseLayer>
       </LayersControl>
-      <Layers />
       </MapContainer>
     </div>
   )
