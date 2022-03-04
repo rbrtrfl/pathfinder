@@ -16,18 +16,30 @@ function Layers() {
     : null;
   const markerPositions = (trackSelected) ? [ positions[0], positions[positions.length-1] ] : null;
 
-  let html = `<svg><text x="100" y="100" fill="red">B</text></svg>`
-
-  const myMarker = new L.divIcon({
-    html: html,
-    iconAnchor: [110, 90],
+  // TODO: make the markers look good
+  function createMarker (letter) {
+    return new L.divIcon({
+    html: `<svg><text x="100" y="100" fill="white">${letter}</text></svg>`,
+    iconAnchor: [109, 92],
     className: 'marker'
   })
+  }
 
   return (
     <div>Layers
       {(trackSelected) ?
       <div>
+        <CircleMarker
+          center={markerPositions[0]}
+          pathOptions={{ color: 'red' }}
+          radius={20}>
+        </CircleMarker>
+        <Marker
+          position={markerPositions[0]}
+          icon={createMarker('A')}
+        >
+        </Marker>
+
         <CircleMarker
           center={markerPositions[1]}
           pathOptions={{ color: 'red' }}
@@ -35,7 +47,7 @@ function Layers() {
         </CircleMarker>
         <Marker
           position={markerPositions[1]}
-          icon={myMarker}
+          icon={createMarker('B')}
         >
         </Marker>
         <GeoJSON
