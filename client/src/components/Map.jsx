@@ -1,19 +1,23 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import Layers from './Layers'
 import {
   LayersControl,
   MapContainer,
   TileLayer,
-  Polyline,
 } from 'react-leaflet'
+import { ActiveTrack } from './MainContainer'
 
-// const center = [46.8403752, 9.0290986]
-const center = [51.505, -0.09]
 
 function Map() {
+
+  // const { selectedTrack, setSelectedTrack } = useContext(ActiveTrack);
+
+  const center = [46.8403752, 9.0290986]
+  // const center = [51.505, -0.09]
+
   return (
     <div className='map'>
-      <MapContainer center={center} zoom={17}>
+      <MapContainer center={center} zoom={14}>
       <LayersControl position="topright">
         <LayersControl.BaseLayer checked name="Thunderforest_Landscape">
           <TileLayer

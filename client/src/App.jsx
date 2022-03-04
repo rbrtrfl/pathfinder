@@ -7,7 +7,7 @@ console.clear();
 
 function App() {
 
-  const [menuItem, setMenuItem]= useState('mytracks');
+  const [menuItem, setMenuItem]= useState('map');
 
   return (
     <div className="app-container">

@@ -8,7 +8,6 @@ import './MyTracks.css';
 
 function MyTracks() {
 
-  const { selectedTrack, setSelectedTrack } = useContext(ActiveTrack);
   const mockdata = [];
 
   db.forEach((element, index) => {
@@ -20,12 +19,13 @@ function MyTracks() {
     });
   });
 
+  const { selectedTrack, setSelectedTrack } = useContext(ActiveTrack);
+
   function setChosen(item) {
     if (item.index === selectedTrack.index) {
-      setSelectedTrack({});
-    } else {
-      setSelectedTrack(item);
+      return setSelectedTrack({});
     }
+    setSelectedTrack(item);
   }
 
   return (
