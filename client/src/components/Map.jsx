@@ -4,9 +4,11 @@ import {
   LayersControl,
   MapContainer,
   TileLayer,
+  Polyline,
 } from 'react-leaflet'
 
-const center = [46.8403752, 9.0290986]
+// const center = [46.8403752, 9.0290986]
+const center = [51.505, -0.09]
 
 function Map() {
   return (

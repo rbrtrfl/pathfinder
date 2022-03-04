@@ -19,7 +19,6 @@ function MyTracks() {
       gpx
     });
   });
-  // const positions = gpx.tracks[0].points.map((p) => [p.lat, p.lon]);
 
   function setChosen(item) {
     if (item.index === selectedTrack.index) {
