@@ -9,6 +9,6 @@ const eventSchema = new Schema({
   },
 });
 
-const Track = mongoose.model('tracklist', eventSchema);
+const Track = mongoose.model('track', eventSchema);
 
 module.exports = Track;

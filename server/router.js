@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.get('/tracks', controller.getAllTracks);
 router.get('/tracks/:id', controller.getOneTrack);
-router.put('/tracks', controller.postTrack);
+router.post('/tracks', controller.postTrack);
 
 module.exports = router;
