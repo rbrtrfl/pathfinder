@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
 function EnRoute() {
   return (
     <div>EnRoute</div>
-  )
+  );
 }
 
-export default EnRoute
+export default EnRoute;

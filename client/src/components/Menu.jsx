@@ -1,31 +1,46 @@
-import React from 'react'
-import './Menu.css'
+import React from 'react';
+import './Menu.css';
 
-function Menu( { menuItem, setMenuItem }) {
+function Menu({ menuItem, setMenuItem }) {
   return (
     <nav>
       <div
         className={menuItem === 'map' ? 'selected' : ''}
         onClick={() => setMenuItem('map')}
-      >➤</div>
+      >
+        ➤
+
+      </div>
       <div
         className={menuItem === 'mytracks' ? 'selected' : ''}
         onClick={() => setMenuItem('mytracks')}
-      >••</div>
+      >
+        ••
+
+      </div>
       <div
         className={menuItem === 'enroute' ? 'selected' : ''}
         onClick={() => setMenuItem('enroute')}
-      >☡</div>
+      >
+        ☡
+
+      </div>
       <div
         className={menuItem === 'drawroute' ? 'selected' : ''}
         onClick={() => setMenuItem('drawroute')}
-      >✎</div>
+      >
+        ✎
+
+      </div>
       <div
         className={menuItem === 'settings' ? 'selected' : ''}
         onClick={() => setMenuItem('settings')}
-      >⌂</div>
+      >
+        ⌂
+
+      </div>
     </nav>
-  )
+  );
 }
 
-export default Menu
+export default Menu;

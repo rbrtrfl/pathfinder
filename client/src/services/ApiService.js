@@ -1,6 +1,6 @@
-import GpxParser from 'gpxparser'
+import GpxParser from 'gpxparser';
 
-const baseurl = 'http://127.0.0.1:4000'
+const baseurl = 'http://127.0.0.1:4000';
 
 export function getAll() {
   return fetch(`${baseurl}/tracks`)
@@ -13,15 +13,15 @@ export function postTrack(file) {
   // gpx.parse(file);
   // console.log(gpx);
   const data = {
-    track: file
-  }
+    track: file,
+  };
 
   return fetch(`${baseurl}/tracks`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify(data),
   })
     .then((data) => data.json())
     .catch((error) => console.error(error));

@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
 function ElevationProfile() {
   return (
     <div>ElevationProfile</div>
-  )
+  );
 }
 
-export default ElevationProfile
+export default ElevationProfile;

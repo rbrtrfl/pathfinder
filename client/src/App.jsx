@@ -1,13 +1,12 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
-import {MainContainer} from './components/MainContainer';
+import { MainContainer } from './components/MainContainer';
 import Menu from './components/Menu';
 
 console.clear();
 
 function App() {
-
-  const [menuItem, setMenuItem]= useState('map');
+  const [menuItem, setMenuItem] = useState('map');
 
   return (
     <div className="app-container">
@@ -22,16 +21,16 @@ function App() {
         integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
         crossOrigin=""
       />
-      <div className='main-container'>
+      <div className="main-container">
         <MainContainer
           menuItem={menuItem}
-        ></MainContainer>
+        />
       </div>
-      <div className='menu-component'>
+      <div className="menu-component">
         <Menu
           menuItem={menuItem}
           setMenuItem={setMenuItem}
-        ></Menu>
+        />
       </div>
     </div>
   );
