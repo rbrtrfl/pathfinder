@@ -31,6 +31,7 @@ function MyTracks({ setBounds }) {
     if (trackSelected) {
       const track = L.geoJSON(selectedTrack.gpx.toGeoJSON());
       console.log(track.getBounds());
+      // TODO: bounds not updating live
       setBounds([
         [track.getBounds()._southWest.lat, track.getBounds()._southWest.lng],
         [track.getBounds()._northEast.lat, track.getBounds()._northEast.lng],

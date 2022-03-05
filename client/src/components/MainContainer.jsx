@@ -10,6 +10,7 @@ const ActiveTrack = createContext();
 function MainContainer( { menuItem } ) {
 
   const [selectedTrack, setSelectedTrack] = useState({});
+  // TODO: bounds not updating live
   const [bounds, setBounds] = useState([
     [46.8403752, 9.0290986],
     [46.8403752, 9.0290986]
