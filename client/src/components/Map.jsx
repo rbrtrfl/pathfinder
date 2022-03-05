@@ -13,7 +13,7 @@ function Map({
 
   return (
     <div className="map">
-      <MapContainer bounds={bounds}>
+      <MapContainer bounds={bounds} tap={false} zoomSnap={0.2}>
         <Layers selectedTrack={selectedTrack} myTracks={myTracks} menuItem={menuItem} />
         <LayersControl position="topright">
           <LayersControl.BaseLayer checked name="Thunderforest_Landscape">

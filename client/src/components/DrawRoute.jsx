@@ -3,6 +3,7 @@ import {
   useMapEvents, Marker, Polyline, GeoJSON,
 } from 'react-leaflet';
 import L from 'leaflet';
+import GpxParser from 'gpxparser';
 import * as apiService from '../services/ApiService';
 
 function DrawRoute() {
@@ -10,25 +11,33 @@ function DrawRoute() {
   const [coordinatesString, setCoordinatesString] = useState('');
   const [newRoute, setNewRoute] = useState([]);
 
+  const [geoJson, setGeoJson] = useState([]);
+
   useMapEvents({
     click: (e) => {
       setPolyline([...polyline, e.latlng]);
+      setCoordinatesString((coordinatesString) ? `${coordinatesString};${e.latlng.lng},${e.latlng.lat}` : `${e.latlng.lng},${e.latlng.lat}`);
     },
   });
 
   function clickHandler() {
-    const croppedCoordinates = polyline.slice(0, polyline.length - 3);
-    console.log(croppedCoordinates);
-    croppedCoordinates.forEach((element) => {
-      console.log(element);
-      setCoordinatesString((coordinatesString) ? `${coordinatesString};${element.lng},${element.lat};` : `${element.lng},${element.lat}`);
-    });
-    console.log(coordinatesString);
-
-    apiService.route(coordinatesString)
+    const croppedCoordinates = coordinatesString.slice(0, coordinatesString.length - (20 * 2));
+    apiService.route(croppedCoordinates)
       .then((data) => {
         if (data.code === 'Ok') {
           console.log(data);
+
+          const geoJSONobj = ({
+            type: 'FeatureCollection',
+            features: [{
+              geometry: data.routes[0].geometry,
+            }],
+          });
+          geoJSONobj.features[0].type = 'Feature';
+          console.log(geoJSONobj);
+          setGeoJson(geoJSONobj);
+          console.log(geoJson);
+
           const newTempRoute = [];
           // geojson from api fetch has format [[lon,lat],[lon,lat],...]
           // Polyline accepts [[lat,lon],[lat,lon],...]
@@ -54,15 +63,15 @@ function DrawRoute() {
     <div>
       <button type="button" onClick={() => clickHandler()} className="get-route-menu">get Route</button>
       <Polyline pathOptions={{ color: 'yellow' }} positions={polyline} />
-      <Polyline pathOptions={{ color: 'lime' }} positions={newRoute} />
-      {/* {(geoJson)
+      {/* <Polyline pathOptions={{ color: 'lime' }} positions={newRoute} /> */}
+      {(geoJson)
         ? (
           <GeoJSON
             data={geoJson} // toGeoJSON()
             pathOptions={{ color: 'red' }}
           />
         )
-        : ''} */}
+        : ''}
     </div>
   );
 

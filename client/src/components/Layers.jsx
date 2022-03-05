@@ -16,6 +16,7 @@ function Layers({ selectedTrack, myTracks, menuItem }) {
       const gpx = new GpxParser();
       gpx.parse(trackData.track);
       console.log(gpx);
+      console.log(gpx.toGeoJSON());
       setDisplayedTrack(gpx);
 
       const allPoints = gpx.tracks.map((track) => track.points.map((p) => [p.lat, p.lon])).flat(); // eslint-disable-line
