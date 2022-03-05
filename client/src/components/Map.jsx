@@ -3,19 +3,16 @@ import {
   LayersControl,
   MapContainer,
   TileLayer,
-  Rectangle,
 } from 'react-leaflet';
 import Layers from './Layers';
 
-function Map({ bounds }) {
+function Map({ bounds, selectedTrack }) {
   // const center = [46.8403752, 9.0290986];
-  console.log('bounds: ', bounds);
 
   return (
     <div className="map">
       <MapContainer bounds={bounds}>
-        <Rectangle bounds={bounds} pathOptions={{ color: 'blue' }} />
-        <Layers />
+        <Layers bounds={bounds} selectedTrack={selectedTrack} />
         <LayersControl position="topright">
           <LayersControl.BaseLayer checked name="Thunderforest_Landscape">
             <TileLayer

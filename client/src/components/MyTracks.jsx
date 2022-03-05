@@ -3,19 +3,10 @@ import GpxParser from 'gpxparser';
 
 import L from 'leaflet';
 import MyTracksItem from './MyTracksItem';
-import { ActiveTrack } from './MainContainer';
-import { getAll } from '../services/ApiService';
 import './MyTracks.css';
 import FileUploadForm from './FileUploadForm';
 
-function MyTracks({ setBounds }) {
-  const { selectedTrack, setSelectedTrack } = useContext(ActiveTrack);
-  const [myTracks, setMyTracks] = useState([]);
-
-  useEffect(() => {
-    getAll()
-      .then((data) => setMyTracks(data));
-  }, []);
+function MyTracks({ myTracks, selectedTrack, setSelectedTrack }) {
 
   function setChosen(data) { // eslint-disable-line
     const gpx = new GpxParser();
@@ -25,17 +16,7 @@ function MyTracks({ setBounds }) {
       _id: data._id,
       gpx,
     };
-
-    const trackSelected = (Object.keys(selectedTrack).length);
-    if (trackSelected) {
-      const track = L.geoJSON(selectedTrack.gpx.toGeoJSON());
-      console.log(track.getBounds());
-      // TODO: bounds not updating live
-      setBounds([
-        [track.getBounds()._southWest.lat, track.getBounds()._southWest.lng],
-        [track.getBounds()._northEast.lat, track.getBounds()._northEast.lng],
-      ]);
-    }
+    
     if (item._id === selectedTrack._id) {
       return setSelectedTrack({});
     }

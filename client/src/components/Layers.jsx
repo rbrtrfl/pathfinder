@@ -1,13 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
-  Marker, GeoJSON, CircleMarker,
+  Marker, GeoJSON, CircleMarker, Rectangle,
 } from 'react-leaflet';
 import L from 'leaflet';
 
-import { ActiveTrack } from './MainContainer';
-
-function Layers() {
-  const { selectedTrack } = useContext(ActiveTrack);
+function Layers({ bounds, selectedTrack }) {
   const trackSelected = (Object.keys(selectedTrack).length);
 
   const positions = (trackSelected)
@@ -30,6 +27,7 @@ function Layers() {
       {(trackSelected)
         ? (
           <div>
+            <Rectangle bounds={bounds} pathOptions={{ color: 'blue' }} />
             <CircleMarker
               center={markerPositions[0]}
               pathOptions={{ color: 'red' }}
