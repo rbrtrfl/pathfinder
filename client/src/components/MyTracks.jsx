@@ -1,26 +1,15 @@
-import React, { useEffect, useState, useContext } from 'react';
-import GpxParser from 'gpxparser';
+import React from 'react';
 
-import L from 'leaflet';
 import MyTracksItem from './MyTracksItem';
 import './MyTracks.css';
 import FileUploadForm from './FileUploadForm';
 
 function MyTracks({ myTracks, selectedTrack, setSelectedTrack }) {
-
-  function setChosen(data) { // eslint-disable-line
-    const gpx = new GpxParser();
-    gpx.parse(data.track);
-
-    const item = {
-      _id: data._id,
-      gpx,
-    };
-    
-    if (item._id === selectedTrack._id) {
-      return setSelectedTrack({});
+  function setChosen(id) { // eslint-disable-line
+    if (id === selectedTrack) {
+      return setSelectedTrack(null);
     }
-    setSelectedTrack(item);
+    setSelectedTrack(id);
   }
 
   return (
@@ -31,8 +20,8 @@ function MyTracks({ myTracks, selectedTrack, setSelectedTrack }) {
           <MyTracksItem
             key={item._id}
             data={item.track}
-            active={item._id === selectedTrack._id}
-            setChosen={() => setChosen(item)}
+            active={item._id === selectedTrack}
+            setChosen={() => setChosen(item._id)}
           />
         ))}
       </ul>

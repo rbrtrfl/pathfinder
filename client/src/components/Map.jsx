@@ -6,13 +6,13 @@ import {
 } from 'react-leaflet';
 import Layers from './Layers';
 
-function Map({ bounds, selectedTrack }) {
+function Map({ bounds, selectedTrack, myTracks }) {
   // const center = [46.8403752, 9.0290986];
 
   return (
     <div className="map">
       <MapContainer bounds={bounds}>
-        <Layers bounds={bounds} selectedTrack={selectedTrack} />
+        <Layers bounds={bounds} selectedTrack={selectedTrack} myTracks={myTracks} />
         <LayersControl position="topright">
           <LayersControl.BaseLayer checked name="Thunderforest_Landscape">
             <TileLayer

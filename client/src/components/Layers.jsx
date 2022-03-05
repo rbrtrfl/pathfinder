@@ -1,16 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Marker, GeoJSON, CircleMarker, Rectangle,
 } from 'react-leaflet';
 import L from 'leaflet';
+import GpxParser from 'gpxparser';
 
-function Layers({ bounds, selectedTrack }) {
-  const trackSelected = (Object.keys(selectedTrack).length);
+function Layers({ bounds, selectedTrack, myTracks }) {
+  const [displayedTrack, setDisplayedTrack] = useState(null);
+  const [endPoints, setEndPoints] = useState({});
 
-  const positions = (trackSelected)
-    ? selectedTrack.gpx.tracks.map((track) => track.points.map((p) => [p.lat, p.lon])).flat()
-    : null;
-  const markerPositions = (trackSelected) ? [positions[0], positions[positions.length - 1]] : null;
+  useEffect(() => {
+    if (selectedTrack) {
+      const trackData = myTracks.find((element) => element._id === selectedTrack);
+      const gpx = new GpxParser();
+      gpx.parse(trackData.track);
+      setDisplayedTrack(gpx);
+
+      const allPoints = gpx.tracks.map((track) => track.points.map((p) => [p.lat, p.lon])).flat(); // eslint-disable-line
+      setEndPoints([allPoints[0], allPoints[allPoints.length - 1]]);
+    }
+  }, []);
 
   // TODO: make the markers look good
   function createMarker(letter) {
@@ -24,31 +33,31 @@ function Layers({ bounds, selectedTrack }) {
   return (
     <div>
       Layers
-      {(trackSelected)
+      {(displayedTrack)
         ? (
           <div>
             <Rectangle bounds={bounds} pathOptions={{ color: 'blue' }} />
             <CircleMarker
-              center={markerPositions[0]}
+              center={endPoints[0]}
               pathOptions={{ color: 'red' }}
               radius={20}
             />
             <Marker
-              position={markerPositions[0]}
+              position={endPoints[0]}
               icon={createMarker('A')}
             />
 
             <CircleMarker
-              center={markerPositions[1]}
+              center={endPoints[1]}
               pathOptions={{ color: 'red' }}
               radius={20}
             />
             <Marker
-              position={markerPositions[1]}
+              position={endPoints[1]}
               icon={createMarker('B')}
             />
             <GeoJSON
-              data={selectedTrack.gpx.toGeoJSON()}
+              data={displayedTrack.toGeoJSON()}
               pathOptions={{ color: 'red' }}
             />
           </div>

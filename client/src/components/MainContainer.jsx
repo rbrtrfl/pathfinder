@@ -1,4 +1,6 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import GpxParser from 'gpxparser';
+import L from 'leaflet';
 import Map from './Map';
 import MyTracks from './MyTracks';
 import EnRoute from './EnRoute';
@@ -9,38 +11,37 @@ import { getAll } from '../services/ApiService';
 // const ActiveTrack = createContext();
 
 function MainContainer({ menuItem }) {
-  const [selectedTrack, setSelectedTrack] = useState({});
+  const [selectedTrack, setSelectedTrack] = useState(null);
   const [myTracks, setMyTracks] = useState([]);
+
+  const [bounds, setBounds] = useState([
+    [46.84, 9.02],
+    [46.89, 9.02],
+  ]);
 
   useEffect(() => {
     getAll()
       .then((data) => setMyTracks(data));
   }, []);
 
-  function calculateBounds(selectedTrack) {
-    const trackSelected = (Object.keys(selectedTrack).length);
-    if (trackSelected) {
-      const track = L.geoJSON(selectedTrack.gpx.toGeoJSON());
-      console.log(track.getBounds());
-      // TODO: bounds not updating live
+  useEffect(() => {
+    if (selectedTrack) {
+      const trackData = myTracks.find((element) => element._id === selectedTrack);
+      const gpx = new GpxParser();
+      gpx.parse(trackData.track);
+
+      const track = L.geoJSON(gpx.toGeoJSON());
       setBounds([
         [track.getBounds()._southWest.lat, track.getBounds()._southWest.lng],
         [track.getBounds()._northEast.lat, track.getBounds()._northEast.lng],
       ]);
     }
-  }
-
-  // TODO: bounds not updating live
-  const [bounds, setBounds] = useState([
-    [46.8403752, 9.0290986],
-    [46.8403752, 9.0290986],
-  ]);
-  console.log('bounds: ', bounds);
+  }, [selectedTrack]);
 
   return (
     <div>
-      { menuItem === 'map' ? <Map bounds={bounds} selectedTrack={selectedTrack} setSelectedTrack={setSelectedTrack} /> : ''}
-      { menuItem === 'mytracks' ? <MyTracks myTracks={myTracks} selectedTrack={selectedTrack} /> : ''}
+      { menuItem === 'map' ? <Map bounds={bounds} selectedTrack={selectedTrack} myTracks={myTracks} /> : ''}
+      { menuItem === 'mytracks' ? <MyTracks myTracks={myTracks} selectedTrack={selectedTrack} setSelectedTrack={setSelectedTrack} /> : ''}
       { menuItem === 'enroute' ? <EnRoute /> : ''}
       { menuItem === 'drawroute' ? <DrawRoute /> : ''}
       { menuItem === 'settings' ? <Settings /> : ''}
@@ -48,4 +49,4 @@ function MainContainer({ menuItem }) {
   );
 }
 
-export { MainContainer };
+export default MainContainer;
