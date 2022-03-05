@@ -6,6 +6,7 @@ import { ActiveTrack } from './MainContainer'
 import { getAll } from '../services/ApiService'
 import './MyTracks.css';
 import L from 'leaflet';
+import FileUploadForm from './FileUploadForm'
 
 function MyTracks({ setBounds }) {
 
@@ -55,6 +56,7 @@ function MyTracks({ setBounds }) {
             );
           })}
       </ul>
+      <FileUploadForm></FileUploadForm>
     </div>
   )
 }
