@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Marker, GeoJSON, CircleMarker, Rectangle,
+  Marker, GeoJSON, CircleMarker,
 } from 'react-leaflet';
 import L from 'leaflet';
 import GpxParser from 'gpxparser';
+import DrawRoute from './DrawRoute';
 
-function Layers({ bounds, selectedTrack, myTracks }) {
+function Layers({ selectedTrack, myTracks, menuItem }) {
   const [displayedTrack, setDisplayedTrack] = useState(null);
   const [endPoints, setEndPoints] = useState({});
 
@@ -32,11 +33,9 @@ function Layers({ bounds, selectedTrack, myTracks }) {
 
   return (
     <div>
-      Layers
       {(displayedTrack)
         ? (
           <div>
-            <Rectangle bounds={bounds} pathOptions={{ color: 'blue' }} />
             <CircleMarker
               center={endPoints[0]}
               pathOptions={{ color: 'red' }}
@@ -63,6 +62,7 @@ function Layers({ bounds, selectedTrack, myTracks }) {
           </div>
         )
         : ''}
+      {(menuItem === 'drawroute') ? <DrawRoute /> : ''}
     </div>
   );
 }

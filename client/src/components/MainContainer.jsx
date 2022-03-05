@@ -4,7 +4,6 @@ import L from 'leaflet';
 import Map from './Map';
 import MyTracks from './MyTracks';
 import EnRoute from './EnRoute';
-import DrawRoute from './DrawRoute';
 import Settings from './Settings';
 import { getAll } from '../services/ApiService';
 
@@ -40,10 +39,9 @@ function MainContainer({ menuItem }) {
 
   return (
     <div>
-      { menuItem === 'map' ? <Map bounds={bounds} selectedTrack={selectedTrack} myTracks={myTracks} /> : ''}
+      { menuItem === 'map' || menuItem === 'drawroute' ? <Map bounds={bounds} selectedTrack={selectedTrack} myTracks={myTracks} menuItem={menuItem} /> : ''}
       { menuItem === 'mytracks' ? <MyTracks myTracks={myTracks} selectedTrack={selectedTrack} setSelectedTrack={setSelectedTrack} /> : ''}
       { menuItem === 'enroute' ? <EnRoute /> : ''}
-      { menuItem === 'drawroute' ? <DrawRoute /> : ''}
       { menuItem === 'settings' ? <Settings /> : ''}
     </div>
   );
