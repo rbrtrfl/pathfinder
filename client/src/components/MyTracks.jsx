@@ -1,28 +1,31 @@
-import React, { useState, useContext } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import GpxParser from 'gpxparser'
 
 import MyTracksItem from './MyTracksItem'
 import { ActiveTrack } from './MainContainer'
-import { db } from '../db/db.mocks';
+import { getAll } from '../services/ApiService'
 import './MyTracks.css';
 import L from 'leaflet';
 
 function MyTracks({ setBounds }) {
 
-  const mockdata = [];
-
-  db.forEach((element, index) => {
-    const gpx = new GpxParser();
-    gpx.parse(element);
-    mockdata.push({
-      index,
-      gpx
-    });
-  });
-
   const { selectedTrack, setSelectedTrack } = useContext(ActiveTrack);
+  const [ myTracks, setMyTracks ] = useState([]);
 
-  function setChosen(item) {
+  useEffect(() => {
+    getAll()
+      .then((data) => setMyTracks(data))
+  }, [])
+
+  function setChosen(data) {
+    const gpx = new GpxParser();
+    gpx.parse(data.track);
+
+    const item = {
+      _id: data._id,
+      gpx: gpx,
+    }
+
     let trackSelected = (Object.keys(selectedTrack).length);
     if (trackSelected) {
       const track = L.geoJSON(selectedTrack.gpx.toGeoJSON());
@@ -32,7 +35,7 @@ function MyTracks({ setBounds }) {
         [track.getBounds()._northEast.lat, track.getBounds()._northEast.lng],
       ]);
     }
-    if (item.index === selectedTrack.index) {
+    if (item._id === selectedTrack._id) {
       return setSelectedTrack({});
     }
     setSelectedTrack(item);
@@ -41,12 +44,12 @@ function MyTracks({ setBounds }) {
   return (
     <div>MyTracks
       <ul>
-          {mockdata.map((item) => {
+          {myTracks.map((item) => {
             return (
                 <MyTracksItem
-                  key={item.index}
-                  gpx={item.gpx}
-                  active={item.index === selectedTrack.index}
+                  key={item._id}
+                  data={item.track}
+                  active={item._id === selectedTrack._id}
                   setChosen={() => setChosen(item)}
                 />
             );

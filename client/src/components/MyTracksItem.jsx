@@ -1,6 +1,10 @@
+import GpxParser from 'gpxparser'
 import React from 'react'
 
-function MyTracksItem( { gpx, active, setChosen } ) {
+function MyTracksItem( { data, active, setChosen } ) {
+
+  const gpx = new GpxParser();
+  gpx.parse(data);
 
   return (
     <div>
