@@ -44,7 +44,7 @@ function MyTracks({ setBounds }) {
 
   return (
     <div>MyTracks
-      <ul>
+      <ul className="track-list-scroll">
           {myTracks.map((item) => {
             return (
                 <MyTracksItem

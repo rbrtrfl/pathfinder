@@ -3,6 +3,11 @@ ul {
   padding: 0px;
 }
 
+.track-list-scroll {
+  height: 60vh;
+  overflow: scroll;
+}
+
 .mytracks-item {
   padding: 15px;
 }
