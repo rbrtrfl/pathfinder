@@ -20,7 +20,18 @@
   flex-direction: column;
   justify-content: center;
 }
- .marker {
-   font-size: x-large;
-   font-weight: bold;
- }
+
+.marker {
+  font-size: x-large;
+  font-weight: bold;
+}
+
+.get-route-menu {
+  position: absolute;
+  bottom: 100px;
+  left: 100px;
+  background-color: white;
+  z-index: 999;
+  cursor: pointer;
+  padding: 5px;
+}
