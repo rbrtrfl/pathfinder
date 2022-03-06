@@ -14,7 +14,6 @@ function DrawRoute() {
 
   useMapEvents({
     click: (e) => {
-      console.log(e.latlng);
       setPolyline([...polyline, e.latlng]);
       setCoordinatesString((coordinatesString) ? `${coordinatesString};${e.latlng.lng},${e.latlng.lat}` : `${e.latlng.lng},${e.latlng.lat}`);
     },

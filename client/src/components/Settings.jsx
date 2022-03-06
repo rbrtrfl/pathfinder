@@ -5,7 +5,7 @@ function Settings() {
   const { setSettings } = useContext(MyContext);
   return (
     <div>
-      <ul>
+      {/* <ul>
         <li className="mytracks-item">
           <h2>Settings</h2>
         </li>
@@ -51,7 +51,7 @@ function Settings() {
           </div>
         </li>
         <div className="mytracks-divider" />
-      </ul>
+      </ul> */}
     </div>
   );
 }

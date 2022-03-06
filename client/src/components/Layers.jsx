@@ -36,7 +36,7 @@ function Layers({ selectedTrack, myTracks, menuItem }) {
             <CircleMarker
               center={endPoints[0]}
               pathOptions={{ color: 'red' }}
-              radius={20}
+              radius={15}
             />
             <Marker
               position={endPoints[0]}
@@ -46,7 +46,7 @@ function Layers({ selectedTrack, myTracks, menuItem }) {
             <CircleMarker
               center={endPoints[1]}
               pathOptions={{ color: 'red' }}
-              radius={20}
+              radius={15}
             />
             <Marker
               position={endPoints[1]}

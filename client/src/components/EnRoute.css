@@ -1,0 +1,11 @@
+.fade {
+  animation: flickerAnimation 2s infinite alternate;
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+@keyframes flickerAnimation {
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}
