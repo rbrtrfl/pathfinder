@@ -4,7 +4,6 @@ import {
 } from 'react-leaflet';
 import * as apiService from '../services/ApiService';
 import { MyContext } from '../helpers/Context';
-import MyTracks from './MyTracks';
 
 function DrawRoute() {
   const [polyline, setPolyline] = useState([]);
