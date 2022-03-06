@@ -33,10 +33,9 @@ function DrawRoute() {
               geometry: data.routes[0].geometry,
             }],
           });
-          geoJSONobj.features[0].type = 'Feature';
-          console.log(geoJSONobj);
           setGeoJson(geoJSONobj);
           console.log(geoJson);
+          return;
 
           const newTempRoute = [];
           // geojson from api fetch has format [[lon,lat],[lon,lat],...]

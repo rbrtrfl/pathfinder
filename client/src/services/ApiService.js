@@ -16,6 +16,8 @@ export function postTrack(file) {
   const dbEntry = {
     geojson: gpx.toGeoJSON(),
   };
+  console.log(dbEntry);
+
   // TODO: calculate distance, ascent, descent
   if (!dbEntry.geojson.properties.name) dbEntry.geojson.properties.name = 'no name given';
 

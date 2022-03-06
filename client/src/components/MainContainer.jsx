@@ -21,15 +21,12 @@ function MainContainer({ menuItem }) {
   useEffect(() => {
     getAll()
       .then((data) => setMyTracks(data));
-  }, []);
+  }, [myTracks]);
 
   useEffect(() => {
     if (selectedTrack) {
-      const trackData = myTracks.find((element) => element._id === selectedTrack);
-      const gpx = new GpxParser();
-      gpx.parse(trackData.track);
-
-      const track = L.geoJSON(gpx.toGeoJSON());
+      const result = myTracks.find((element) => element._id === selectedTrack);
+      const track = L.geoJSON(result.geojson);
       setBounds([
         [track.getBounds()._southWest.lat, track.getBounds()._southWest.lng],
         [track.getBounds()._northEast.lat, track.getBounds()._northEast.lng],

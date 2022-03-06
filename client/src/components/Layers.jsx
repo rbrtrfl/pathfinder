@@ -3,7 +3,6 @@ import {
   Marker, GeoJSON, CircleMarker,
 } from 'react-leaflet';
 import L from 'leaflet';
-import GpxParser from 'gpxparser';
 import DrawRoute from './DrawRoute';
 
 function Layers({ selectedTrack, myTracks, menuItem }) {
@@ -12,14 +11,9 @@ function Layers({ selectedTrack, myTracks, menuItem }) {
 
   useEffect(() => {
     if (selectedTrack) {
-      const trackData = myTracks.find((element) => element._id === selectedTrack);
-      const gpx = new GpxParser();
-      gpx.parse(trackData.track);
-      console.log(gpx);
-      console.log(gpx.toGeoJSON());
-      setDisplayedTrack(gpx);
-
-      const allPoints = gpx.tracks.map((track) => track.points.map((p) => [p.lat, p.lon])).flat(); // eslint-disable-line
+      const { geojson } = myTracks.find((element) => element._id === selectedTrack);
+      setDisplayedTrack(geojson);
+      const allPoints = geojson.features.map((feature) => feature.geometry.coordinates.map((c) => [c[1], c[0]])).flat(); // eslint-disable-line
       setEndPoints([allPoints[0], allPoints[allPoints.length - 1]]);
     }
   }, []);
@@ -58,7 +52,7 @@ function Layers({ selectedTrack, myTracks, menuItem }) {
               icon={createMarker('B')}
             />
             <GeoJSON
-              data={displayedTrack.toGeoJSON()}
+              data={displayedTrack}
               pathOptions={{ color: 'red' }}
             />
           </div>

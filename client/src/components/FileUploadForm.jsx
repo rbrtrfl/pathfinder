@@ -10,8 +10,9 @@ function FileUploadForm() {
     reader.addEventListener('loadend', (data) => {
       postTrack(data.currentTarget.result);
     });
+  // TODO: form reset
   }
-
+  // TODO: form validation
   return (
     <div>
       FileUploadForm
