@@ -1,12 +1,11 @@
 import React from 'react';
-
-import MyTracksItem from './MyTracksItem';
 import './MyTracks.css';
+import MyTracksItem from './MyTracksItem';
 import FileUploadForm from './FileUploadForm';
 
 function MyTracks({ myTracks, selectedTrack, setSelectedTrack }) {
-  
   function setChosen(id) { // eslint-disable-line
+    console.log(id);
     if (id === selectedTrack) {
       return setSelectedTrack(null);
     }

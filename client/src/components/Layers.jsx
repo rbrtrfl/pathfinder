@@ -16,7 +16,7 @@ function Layers({ selectedTrack, myTracks, menuItem }) {
       const allPoints = geojson.features.map((feature) => feature.geometry.coordinates.map((c) => [c[1], c[0]])).flat(); // eslint-disable-line
       setEndPoints([allPoints[0], allPoints[allPoints.length - 1]]);
     }
-  }, []);
+  }, [selectedTrack]);
 
   // TODO: make the markers look good
   function createMarker(letter) {

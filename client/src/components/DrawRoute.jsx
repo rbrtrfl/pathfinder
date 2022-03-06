@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   useMapEvents, Polyline, GeoJSON,
 } from 'react-leaflet';
-import L from 'leaflet';
 import * as apiService from '../services/ApiService';
+import { MyContext } from '../helpers/Context';
+import MyTracks from './MyTracks';
 
 function DrawRoute() {
   const [polyline, setPolyline] = useState([]);
   const [coordinatesString, setCoordinatesString] = useState('');
-  const [newRoute, setNewRoute] = useState([]);
+  // const [geoJson, setGeoJson] = useState(null);
 
-  const [geoJson, setGeoJson] = useState([]);
+  const { myTracks, setMyTracks, setSelectedTrack } = useContext(MyContext);
 
   useMapEvents({
     click: (e) => {
@@ -24,27 +25,26 @@ function DrawRoute() {
     apiService.route(croppedCoordinates)
       .then((data) => {
         if (data.code === 'Ok') {
-          console.log(data.routes)
           const geojson = ({
             type: 'FeatureCollection',
+            properties: {
+              name: 'My first track',
+            },
             features: [{
               type: 'Feature',
               geometry: data.routes[0].geometry,
             }],
           });
-          console.log(geojson);
-          // const track = L.geoJSON(geojson);
 
-          setGeoJson(geojson);
-          apiService.postRoute(geojson);
+          // setGeoJson(geojson);
 
-          const newTempRoute = [];
-          // geojson from api fetch has format [[lon,lat],[lon,lat],...]
-          // Polyline accepts [[lat,lon],[lat,lon],...]
-          data.routes[0].geometry.coordinates.forEach((item) => {
-            newTempRoute.push(item.reverse());
-          });
-          setNewRoute(newTempRoute);
+          apiService.postRoute(geojson)
+            .then((response) => {
+              console.log(response._id);
+
+              setMyTracks([...myTracks, response]);
+              setSelectedTrack(response._id);
+            });
         }
       });
     setPolyline([]);
@@ -62,16 +62,15 @@ function DrawRoute() {
   return (
     <div>
       <button type="button" onClick={() => clickHandler()} className="get-route-menu">get Route</button>
-      <Polyline pathOptions={{ color: 'yellow' }} positions={polyline} />
-      {/* <Polyline pathOptions={{ color: 'lime' }} positions={newRoute} /> */}
-      {(geoJson)
+      <Polyline pathOptions={{ color: 'blue' }} positions={polyline} />
+      {/* {(geoJson)
         ? (
           <GeoJSON
-            data={geoJson} // toGeoJSON()
+            data={geoJson}
             pathOptions={{ color: 'red' }}
           />
         )
-        : ''}
+        : ''} */}
     </div>
   );
 }
