@@ -19,7 +19,7 @@ function MyTracks({ myTracks, selectedTrack, setSelectedTrack }) {
         {myTracks.map((item) => (
           <MyTracksItem
             key={item._id}
-            data={item.track}
+            data={item.geojson}
             active={item._id === selectedTrack}
             setChosen={() => setChosen(item._id)}
           />

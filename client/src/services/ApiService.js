@@ -1,3 +1,5 @@
+import GpxParser from 'gpxparser';
+
 const baseUrlDb = 'http://127.0.0.1:4000';
 const baseUrlMapbox = 'https://api.mapbox.com/directions/v5/mapbox/walking/';
 const token = 'pk.eyJ1IjoicmJydHJmbCIsImEiOiJja3p5Mjd6cmowN2JjMnZtbzE4emFuYnE1In0.h6w9OdIpTljCcOVWzexbtw';
@@ -9,9 +11,13 @@ export function getAll() {
 }
 
 export function postTrack(file) {
+  const gpx = new GpxParser();
+  gpx.parse(file);
   const dbEntry = {
-    track: file,
+    geojson: gpx.toGeoJSON(),
   };
+  // TODO: calculate distance, ascent, descent
+  if (!dbEntry.geojson.properties.name) dbEntry.geojson.properties.name = 'no name given';
 
   return fetch(`${baseUrlDb}/tracks`, {
     method: 'POST',

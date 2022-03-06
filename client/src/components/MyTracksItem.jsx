@@ -1,10 +1,6 @@
-import GpxParser from 'gpxparser';
 import React from 'react';
 
 function MyTracksItem({ data, active, setChosen }) {
-  const gpx = new GpxParser();
-  gpx.parse(data);
-
   return (
     <div>
       <li
@@ -14,26 +10,26 @@ function MyTracksItem({ data, active, setChosen }) {
         <ul>
           <li>
             <span className="bold">Name: </span>
-            <span>{gpx.tracks[0].name}</span>
+            <span>{data.properties.name}</span>
           </li>
           <li>
             <span className="bold">Distance: </span>
             <span>
-              {Math.floor(gpx.tracks[0].distance.total)}
+              {/* {Math.floor(gpx.tracks[0].distance.total)} // TODO: */}
               m
             </span>
           </li>
           <li>
             <span className="bold">Ascent: </span>
             <span>
-              {Math.floor(gpx.tracks[0].elevation.pos)}
+              {/* {Math.floor(gpx.tracks[0].elevation.pos)}// TODO: */}
               m
             </span>
           </li>
           <li>
             <span className="bold">Descent: </span>
             <span>
-              {Math.floor(gpx.tracks[0].elevation.neg)}
+              {/* {Math.floor(gpx.tracks[0].elevation.neg)}// TODO: */}
               m
             </span>
           </li>

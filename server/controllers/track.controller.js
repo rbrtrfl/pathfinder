@@ -5,7 +5,7 @@ async function getAllTracks(req, res) {
     const dbResponse = await Track.find();
     res.status(200);
     res.send(dbResponse);
-    console.log(dbResponse); // eslint-disable-line no-console
+    // console.log(dbResponse); // eslint-disable-line no-console
   } catch (error) {
     res.status(500);
     console.error(error); // eslint-disable-line no-console
