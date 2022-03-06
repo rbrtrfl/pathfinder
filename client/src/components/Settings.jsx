@@ -27,7 +27,8 @@ function Settings() {
         <li className="mytracks-item">
           <div className="settings-item">
             <span className="bold">Break Time: </span>
-            <input type="input" value="20%" />
+            <input type="number" placeholder="20" />
+            <span> %</span>
           </div>
         </li>
         <div className="mytracks-divider" />
@@ -39,7 +40,7 @@ function Settings() {
           <div className="settings-item">
             <span className="bold">Location: </span>
             <button>⦿</button>
-            <span>   click to set location</span>
+            <span> click to set location</span>
           </div>
         </li>
         <div className="mytracks-divider" />

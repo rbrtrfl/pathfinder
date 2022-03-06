@@ -4,6 +4,7 @@ import {
 } from 'react-leaflet';
 import L from 'leaflet';
 import DrawRoute from './DrawRoute';
+import EnRoute from './EnRoute';
 
 function Layers({ selectedTrack, myTracks, menuItem }) {
   const [displayedTrack, setDisplayedTrack] = useState(null);
@@ -59,6 +60,7 @@ function Layers({ selectedTrack, myTracks, menuItem }) {
         )
         : ''}
       {(menuItem === 'drawroute') ? <DrawRoute /> : ''}
+      {(menuItem === 'enroute') ? <EnRoute /> : ''}
     </div>
   );
 }

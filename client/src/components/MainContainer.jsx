@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import L from 'leaflet';
 import Map from './Map';
 import MyTracks from './MyTracks';
-import EnRoute from './EnRoute';
 import Settings from './Settings';
 import { getAll } from '../services/ApiService';
 import { MyContext } from '../helpers/Context';
@@ -33,9 +32,8 @@ function MainContainer({ menuItem }) {
 
   return (
     <MyContext.Provider value={{selectedTrack, setSelectedTrack, myTracks, setMyTracks}}> {/*eslint-disable-line*/}
-      { menuItem === 'map' || menuItem === 'drawroute' ? <Map bounds={bounds} selectedTrack={selectedTrack} menuItem={menuItem} myTracks={myTracks} /> : ''}
+      { menuItem === 'map' || menuItem === 'drawroute' || menuItem === 'enroute' ? <Map bounds={bounds} selectedTrack={selectedTrack} menuItem={menuItem} myTracks={myTracks} /> : ''}
       { menuItem === 'mytracks' ? <MyTracks myTracks={myTracks} selectedTrack={selectedTrack} setSelectedTrack={setSelectedTrack} /> : ''}
-      { menuItem === 'enroute' ? <EnRoute /> : ''}
       { menuItem === 'settings' ? <Settings /> : ''}
     </MyContext.Provider>
   );
