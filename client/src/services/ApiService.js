@@ -32,6 +32,26 @@ export function postTrack(file) {
     .catch((error) => console.error(error)); // eslint-disable-line no-console
 }
 
+export function postRoute(geojson) {
+  const dbEntry = {
+    geojson,
+  };
+  console.log(dbEntry);
+
+  // TODO: calculate distance, ascent, descent
+  // dbEntry.geojson.properties.name = 'no name given';
+
+  return fetch(`${baseUrlDb}/tracks`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(dbEntry),
+  })
+    .then((data) => data.json())
+    .catch((error) => console.error(error)); // eslint-disable-line no-console
+}
+
 export function route(coordinates) {
   return fetch(`${baseUrlMapbox}${coordinates}?access_token=${token}&geometries=geojson`)
     .then((data) => data.json())

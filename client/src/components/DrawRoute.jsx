@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
-  useMapEvents, Marker, Polyline, GeoJSON,
+  useMapEvents, Polyline, GeoJSON,
 } from 'react-leaflet';
 import L from 'leaflet';
-import GpxParser from 'gpxparser';
 import * as apiService from '../services/ApiService';
 
 function DrawRoute() {
@@ -25,17 +24,19 @@ function DrawRoute() {
     apiService.route(croppedCoordinates)
       .then((data) => {
         if (data.code === 'Ok') {
-          console.log(data);
-
-          const geoJSONobj = ({
+          console.log(data.routes)
+          const geojson = ({
             type: 'FeatureCollection',
             features: [{
+              type: 'Feature',
               geometry: data.routes[0].geometry,
             }],
           });
-          setGeoJson(geoJSONobj);
-          console.log(geoJson);
-          return;
+          console.log(geojson);
+          // const track = L.geoJSON(geojson);
+
+          setGeoJson(geojson);
+          apiService.postRoute(geojson);
 
           const newTempRoute = [];
           // geojson from api fetch has format [[lon,lat],[lon,lat],...]
@@ -73,10 +74,6 @@ function DrawRoute() {
         : ''}
     </div>
   );
-
-  // return position === null ? null : (
-  //   <Marker position={position} />
-  // );
 }
 
 export default DrawRoute;

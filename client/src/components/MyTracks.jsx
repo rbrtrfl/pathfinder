@@ -5,6 +5,7 @@ import './MyTracks.css';
 import FileUploadForm from './FileUploadForm';
 
 function MyTracks({ myTracks, selectedTrack, setSelectedTrack }) {
+  
   function setChosen(id) { // eslint-disable-line
     if (id === selectedTrack) {
       return setSelectedTrack(null);

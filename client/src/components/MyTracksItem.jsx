@@ -10,7 +10,7 @@ function MyTracksItem({ data, active, setChosen }) {
         <ul>
           <li>
             <span className="bold">Name: </span>
-            <span>{data.properties.name}</span>
+            {/* <span>{data.properties.name}</span> */}
           </li>
           <li>
             <span className="bold">Distance: </span>
