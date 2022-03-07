@@ -4,7 +4,7 @@ const controller = require('./controllers/track.controller');
 const router = express.Router();
 
 router.get('/tracks', controller.getAllTracks);
-router.get('/tracks/:id', controller.getOneTrack);
 router.post('/tracks', controller.postTrack);
+router.post('/route', controller.postRoute);
 
 module.exports = router;

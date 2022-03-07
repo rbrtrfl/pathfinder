@@ -13,16 +13,12 @@ export function getAll() {
 export function postTrack(file) {
   const gpx = new GpxParser();
   gpx.parse(file);
-  console.log(gpx);
   const dbEntry = {
     geojson: gpx.toGeoJSON(),
   };
-  console.log(dbEntry);
-
   if (!dbEntry.geojson.properties.name) {
     dbEntry.geojson.properties.name = dbEntry.geojson.features[0].properties.name;
   }
-
   return fetch(`${baseUrlDb}/tracks`, {
     method: 'POST',
     headers: {
@@ -38,11 +34,7 @@ export function postRoute(geojson) {
   const dbEntry = {
     geojson,
   };
-  console.log(dbEntry);
-
-  // dbEntry.geojson.properties.name = 'no name given';
-
-  return fetch(`${baseUrlDb}/tracks`, {
+  return fetch(`${baseUrlDb}/route`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -52,17 +44,6 @@ export function postRoute(geojson) {
     .then((data) => data.json())
     .catch((error) => console.error(error)); // eslint-disable-line no-console
 }
-
-
-
-
-
-
-
-
-
-
-
 
 export function route(coordinates) {
   return fetch(`${baseUrlMapbox}${coordinates}?access_token=${token}&geometries=geojson`)

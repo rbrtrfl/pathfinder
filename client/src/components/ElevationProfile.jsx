@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  LineChart, Line, CartesianGrid, XAxis, YAxis,
+  AreaChart, Area, CartesianGrid, XAxis, YAxis,
 } from 'recharts';
 import * as turf from '@turf/turf';
 
@@ -13,7 +13,7 @@ function ElevationProfile({ selectedTrack, myTracks }) {
       const coordsFlat = result.geojson.features.map((element) => element.geometry.coordinates).flat(); //eslint-disable-line
 
       // redece array to fixed length
-      const step = Math.floor(coordsFlat.length / 200);
+      const step = Math.ceil(coordsFlat.length / 200);
       const coordFlatSmall = [];
       for (let i = 0; i < coordsFlat.length; i + step) {
         coordFlatSmall.push(coordsFlat[i]);
@@ -40,7 +40,6 @@ function ElevationProfile({ selectedTrack, myTracks }) {
           elevation: coordsFlat[i][2].toFixed(0),
         });
       }
-      console.log(rechartData);
       return rechartData;
     }
   }
@@ -51,12 +50,12 @@ function ElevationProfile({ selectedTrack, myTracks }) {
 
   return (
     <div className="elevation-container">
-      <LineChart width={370} height={150} data={data}>
-        <Line type="monotone" dataKey="elevation" stroke="#8884d8" />
-        <CartesianGrid stroke="#ccc" />
-        <XAxis dataKey="length" tickCount={5} minTickGap={20} />
-        <YAxis domain={['dataMin', 'dataMax']} />
-      </LineChart>
+      <AreaChart width={370} height={150} data={data}>
+        <Area type="monotone" dataKey="elevation" stroke="white" strokeWidth={3} fillOpacity={1} fill="grey" />
+        <CartesianGrid stroke="grey" />
+        <XAxis dataKey="length" minTickGap={20} stroke="white" />
+        <YAxis domain={['dataMin', 'dataMax']} stroke="white" />
+      </AreaChart>
     </div>
   );
 }

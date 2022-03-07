@@ -1,6 +1,13 @@
 const turf = require('@turf/turf');
 
-module.exports = function addMetadata(body) {
+function addElevation(body) {
+  const result = body;
+  const coordinates = result.geojson.features[0].geometry.coordinates.map((c) => [c[0], c[1], 0]);
+  result.geojson.features[0].geometry.coordinates = coordinates;
+  return result;
+}
+
+function addMetadata(body) {
   const result = body;
   result.geojson.properties.distance = { total: turf.length(body.geojson, { units: 'kilometers' }) };
   const { features } = body.geojson;
@@ -33,4 +40,6 @@ module.exports = function addMetadata(body) {
   result.geojson.properties.elevation = elevation;
 
   return result;
-};
+}
+
+module.exports = { addMetadata, addElevation };

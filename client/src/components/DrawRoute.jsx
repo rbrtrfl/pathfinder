@@ -21,6 +21,7 @@ function DrawRoute() {
   });
 
   function createGeoJSON(data) {
+    // TODO: create name inside app
     return {
       type: 'FeatureCollection',
       properties: {
@@ -43,7 +44,6 @@ function DrawRoute() {
 
           apiService.postRoute(geojson)
             .then((response) => {
-              console.log(response._id);
               setMyTracks([...myTracks, response]);
               setSelectedTrack(response._id);
             });
@@ -57,14 +57,14 @@ function DrawRoute() {
     <div>
       <button type="button" onClick={() => clickHandler()} className="get-route-menu">get Route</button>
       <Polyline pathOptions={{ color: 'blue' }} positions={polyline} />
-      {/* {(geoJson)
+      {(geoJson)
         ? (
           <GeoJSON
             data={geoJson}
             pathOptions={{ color: 'red' }}
           />
         )
-        : ''} */}
+        : ''}
     </div>
   );
 }
