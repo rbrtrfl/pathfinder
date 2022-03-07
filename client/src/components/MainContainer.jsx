@@ -8,8 +8,8 @@ import { MyContext } from '../helpers/Context';
 import ElevationProfile from './ElevationProfile';
 
 function MainContainer({ menuItem }) {
-  const [selectedTrack, setSelectedTrack] = useState(null);
   const [myTracks, setMyTracks] = useState([]);
+  const [selectedTrack, setSelectedTrack] = useState(null);
   const [bounds, setBounds] = useState([
     [46.84, 9.02],
     [46.89, 9.02],
@@ -33,9 +33,27 @@ function MainContainer({ menuItem }) {
 
   return (
       <MyContext.Provider value={{selectedTrack, setSelectedTrack, myTracks, setMyTracks}}> {/*eslint-disable-line*/}
-        <ElevationProfile />
-        { menuItem === 'map' || menuItem === 'drawroute' || menuItem === 'enroute' ? <Map bounds={bounds} selectedTrack={selectedTrack} menuItem={menuItem} myTracks={myTracks} /> : ''}
-        { menuItem === 'mytracks' ? <MyTracks myTracks={myTracks} selectedTrack={selectedTrack} setSelectedTrack={setSelectedTrack} /> : ''}
+        <ElevationProfile
+          selectedTrack={selectedTrack}
+        />
+        { menuItem === 'map' || menuItem === 'drawroute' || menuItem === 'enroute'
+          ? (
+            <Map
+              bounds={bounds}
+              selectedTrack={selectedTrack}
+              menuItem={menuItem}
+              myTracks={myTracks}
+            />
+          )
+          : ''}
+        { menuItem === 'mytracks'
+          ? (
+            <MyTracks
+              myTracks={myTracks}
+              selectedTrack={selectedTrack}
+              setSelectedTrack={setSelectedTrack}
+            />
+          ) : ''}
         { menuItem === 'settings' ? <Settings /> : ''}
       </MyContext.Provider>
   );
