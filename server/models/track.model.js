@@ -9,13 +9,13 @@ const properties = new Schema({
     name: { type: String },
   },
   distance: {
-    total: { type: String },
+    total: { type: Number },
   },
   elevation: {
-    max: { type: String },
-    min: { type: String },
-    neg: { type: String },
-    pos: { type: String },
+    max: { type: Number },
+    min: { type: Number },
+    neg: { type: Number },
+    pos: { type: Number },
   },
 });
 
