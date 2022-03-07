@@ -52,10 +52,13 @@ function Layers({ selectedTrack, myTracks, menuItem }) {
               position={endPoints[1]}
               icon={createMarker('B')}
             />
-            <GeoJSON
-              data={displayedTrack}
-              pathOptions={{ color: 'red' }}
-            />
+            {(menuItem === 'enroute') ? ''
+              : (
+                <GeoJSON
+                  data={displayedTrack}
+                  pathOptions={{ color: 'red' }}
+                />
+              )}
           </div>
         )
         : ''}

@@ -48,10 +48,10 @@ function EnRoute() {
         radius={20}
       />
       {(pastTrack
-        ? <Polyline pathOptions={{ color: 'lime', dashArray: '5,10' }} positions={pastTrack} />
+        ? <Polyline pathOptions={{ color: 'purple', dashArray: '5,10' }} positions={pastTrack} />
         : '')}
       {(futureTrack
-        ? <Polyline pathOptions={{ color: 'lime' }} positions={futureTrack} />
+        ? <Polyline pathOptions={{ color: 'purple' }} positions={futureTrack} />
         : '')}
     </div>
   );
