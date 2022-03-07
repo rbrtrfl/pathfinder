@@ -12,20 +12,27 @@ function MyTracks({ myTracks, selectedTrack, setSelectedTrack }) {
   }
 
   return (
-    <div>
-      MyTracks
-      <ul className="track-list-scroll">
-        {myTracks.map((item) => (
-          <MyTracksItem
-            key={item._id}
-            data={item.geojson}
-            active={item._id === selectedTrack}
-            setChosen={() => setChosen(item._id)}
-          />
-        ))}
-      </ul>
-      <FileUploadForm />
-    </div>
+    <ul className="track-list-scroll">
+      <li className="mytracks-item">
+        <h2>My Tracks</h2>
+      </li>
+      <div className="mytracks-divider" />
+      {myTracks.map((item) => (
+        <MyTracksItem
+          key={item._id}
+          data={item.geojson}
+          active={item._id === selectedTrack}
+          setChosen={() => setChosen(item._id)}
+        />
+      ))}
+      <li className="mytracks-item">
+        <h2>File Upload</h2>
+      </li>
+      <div className="mytracks-divider" />
+      <li className="mytracks-item">
+        <FileUploadForm />
+      </li>
+    </ul>
   );
 }
 

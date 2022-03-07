@@ -18,8 +18,7 @@ function FileUploadForm() {
   }
   // TODO: form validation
   return (
-    <div>
-      FileUploadForm
+    <div className="settings-item">
       <form onSubmit={clickHandler}>
         <input type="file" id="input" />
         <button type="submit">UPLOAD</button>

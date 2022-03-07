@@ -5,53 +5,55 @@ function Settings() {
   const { setSettings } = useContext(MyContext);
   return (
     <div>
-      {/* <ul>
-        <li className="mytracks-item">
-          <h2>Settings</h2>
-        </li>
-        <div className="mytracks-divider" />
-        <li className="mytracks-item">
-          <div className="settings-item">
-            <span className="bold">Hiking Start: </span>
-            <input type="time" value="07:00" />
-          </div>
-        </li>
-        <div className="mytracks-divider" />
-        <li className="mytracks-item">
-          <div className="settings-item">
-            <span className="bold">Hiking End: </span>
-            <input type="time" value="22:00" />
-          </div>
-        </li>
-        <div className="mytracks-divider" />
-        <li className="mytracks-item">
-          <div className="settings-item">
-            <span className="bold">Break Time: </span>
-            <input type="number" placeholder="20" />
-            <span> %</span>
-          </div>
-        </li>
-        <div className="mytracks-divider" />
-        <li className="mytracks-item">
-          <h2>Simulate</h2>
-        </li>
-        <div className="mytracks-divider" />
-        <li className="mytracks-item">
-          <div className="settings-item">
-            <span className="bold">Location: </span>
-            <button>⦿</button>
-            <span> click to set location</span>
-          </div>
-        </li>
-        <div className="mytracks-divider" />
-        <li className="mytracks-item">
-          <div className="settings-item">
-            <span className="bold">Time: </span>
-            <input type="time" value="07:00" />
-          </div>
-        </li>
-        <div className="mytracks-divider" />
-      </ul> */}
+      <ul>
+        <form>
+          <li className="mytracks-item">
+            <h2>Settings</h2>
+          </li>
+          <div className="mytracks-divider" />
+          <li className="mytracks-item">
+            <div className="settings-item">
+              <span className="bold">Hiking Start: </span>
+              <input type="time" defaultValue="07:00" />
+            </div>
+          </li>
+          <div className="mytracks-divider" />
+          <li className="mytracks-item">
+            <div className="settings-item">
+              <span className="bold">Hiking End: </span>
+              <input type="time" defaultValue="22:00" />
+            </div>
+          </li>
+          <div className="mytracks-divider" />
+          <li className="mytracks-item">
+            <div className="settings-item">
+              <span className="bold">Break Time: </span>
+              <input type="number" defaultValue="20" placeholder="20" />
+              <span> %</span>
+            </div>
+          </li>
+          <div className="mytracks-divider" />
+          <li className="mytracks-item">
+            <h2>Simulate</h2>
+          </li>
+          <div className="mytracks-divider" />
+          <li className="mytracks-item">
+            <div className="settings-item">
+              <span className="bold">Location: </span>
+              <button type="button">⦿</button>
+              <span> click to set location</span>
+            </div>
+          </li>
+          <div className="mytracks-divider" />
+          <li className="mytracks-item">
+            <div className="settings-item">
+              <span className="bold">Time: </span>
+              <input type="time" defaultValue="07:00" />
+            </div>
+          </li>
+          <div className="mytracks-divider" />
+        </form>
+      </ul>
     </div>
   );
 }

@@ -33,10 +33,13 @@ function MainContainer({ menuItem }) {
 
   return (
       <MyContext.Provider value={{selectedTrack, setSelectedTrack, myTracks, setMyTracks}}> {/*eslint-disable-line*/}
-        <ElevationProfile
-          selectedTrack={selectedTrack}
-          myTracks={myTracks}
-        />
+        {menuItem === 'map' || menuItem === 'enroute' || menuItem === 'mytracks' ? (
+          <ElevationProfile
+            selectedTrack={selectedTrack}
+            myTracks={myTracks}
+          />
+        )
+          : ''}
         { menuItem === 'map' || menuItem === 'drawroute' || menuItem === 'enroute'
           ? (
             <Map
