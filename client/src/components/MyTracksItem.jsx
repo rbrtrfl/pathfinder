@@ -15,21 +15,21 @@ function MyTracksItem({ data, active, setChosen }) {
           <li>
             <span className="bold">Distance: </span>
             <span>
-              {/* {Math.floor(gpx.tracks[0].distance.total)} // TODO: */}
-              m
+              {Math.floor(data.properties.distance.total)}
+              km
             </span>
           </li>
           <li>
             <span className="bold">Ascent: </span>
             <span>
-              {/* {Math.floor(gpx.tracks[0].elevation.pos)}// TODO: */}
+              {Math.floor(data.properties.elevation.pos)}
               m
             </span>
           </li>
           <li>
             <span className="bold">Descent: </span>
             <span>
-              {/* {Math.floor(gpx.tracks[0].elevation.neg)}// TODO: */}
+              {Math.floor(data.properties.elevation.neg)}
               m
             </span>
           </li>
