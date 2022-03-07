@@ -5,8 +5,8 @@ const mongoose = require('mongoose');
 const router = require('./router');
 
 const app = express();
-const expressHost = process.env.EXPRESS_PORT;
-const expressPort = process.env.HOST;
+const expressHost = process.env.EXPRESS_HOST;
+const expressPort = process.env.EXPRESS_PORT;
 const dbHost = process.env.DB_HOST;
 const dbPort = process.env.DB_PORT;
 

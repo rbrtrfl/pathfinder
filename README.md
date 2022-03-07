@@ -38,7 +38,9 @@ To get started, run `npm i` inside the root, client and server folder. Run `node
 # .env file example *client*
 
 ```
-REACT_APP_MAPBOX_TOKEN=yourtoken
+REACT_APP_MAPBOX_TOKEN=
+REACT_APP_DB_HOST=
+REACT_APP_DB_PORT=
 ```
 
 # .env file example *server*

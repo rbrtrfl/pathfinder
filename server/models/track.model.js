@@ -8,6 +8,15 @@ const properties = new Schema({
   author: {
     name: { type: String },
   },
+  distance: {
+    total: { type: String },
+  },
+  elevation: {
+    max: { type: String },
+    min: { type: String },
+    neg: { type: String },
+    pos: { type: String },
+  },
 });
 
 const features = new Schema({

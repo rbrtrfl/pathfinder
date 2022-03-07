@@ -1,5 +1,7 @@
 const Track = require('../models/track.model');
 
+const addMetadata = require('../tools/tools');
+
 async function getAllTracks(req, res) {
   try {
     const dbResponse = await Track.find();
@@ -28,7 +30,9 @@ async function getOneTrack(req, res) {
 
 async function postTrack(req, res) {
   try {
-    const dbResponse = await Track.create(req.body);
+    const fullEntry = addMetadata(req.body);
+    console.log(fullEntry);
+    const dbResponse = await Track.create(fullEntry);
     res.status(201);
     res.send(dbResponse);
     console.log(dbResponse); // eslint-disable-line no-console
