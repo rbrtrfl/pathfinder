@@ -22,7 +22,7 @@ module.exports = function addMetadata(body) {
     return ((curr > array[index + 1]) ? (prev + (array[index + 1] - curr)) : prev);
   };
   const pos = elevations.reduce(getPos, 0);
-  const neg = elevations.reduce(getNeg, 0);
+  const neg = Math.abs(elevations.reduce(getNeg, 0));
 
   const elevation = {
     max,

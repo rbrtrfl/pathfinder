@@ -13,23 +13,37 @@ function MyTracksItem({ data, active, setChosen }) {
             <span>{data.properties.name}</span>
           </li>
           <li>
-            <span className="bold">Distance: </span>
+            <span className="bold">↔ Distance: </span>
             <span>
               {Math.floor(data.properties.distance.total)}
               km
             </span>
           </li>
           <li>
-            <span className="bold">Ascent: </span>
+            <span className="bold">↗ Ascent: </span>
             <span>
               {Math.floor(data.properties.elevation.pos)}
               m
             </span>
           </li>
           <li>
-            <span className="bold">Descent: </span>
+            <span className="bold">↘ Descent: </span>
             <span>
               {Math.floor(data.properties.elevation.neg)}
+              m
+            </span>
+          </li>
+          <li>
+            <span className="bold"> Max Elevation: </span>
+            <span>
+              {Math.floor(data.properties.elevation.max)}
+              m
+            </span>
+          </li>
+          <li>
+            <span className="bold">Min Elevation: </span>
+            <span>
+              {Math.floor(data.properties.elevation.min)}
               m
             </span>
           </li>

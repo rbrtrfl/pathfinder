@@ -2,7 +2,9 @@ import React from 'react';
 
 function ElevationProfile() {
   return (
-    <div>ElevationProfile</div>
+    <div className="elevation-container">
+      <div />
+    </div>
   );
 }
 

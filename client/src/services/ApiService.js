@@ -19,7 +19,6 @@ export function postTrack(file) {
   };
   console.log(dbEntry);
 
-  // TODO: calculate distance, ascent, descent
   if (!dbEntry.geojson.properties.name) {
     dbEntry.geojson.properties.name = dbEntry.geojson.features[0].properties.name;
   }

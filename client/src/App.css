@@ -11,6 +11,8 @@
 .main-container {
   height: 100%;
   flex-grow: 1;
+
+  position: relative;
 }
 
 .menu-component {
@@ -34,4 +36,14 @@
   z-index: 999;
   cursor: pointer;
   padding: 5px;
+}
+
+.elevation-container {
+  height: 20vh;
+  width: 100vw;
+  background-color: black;
+  opacity: 0.2;
+  position: absolute;
+  bottom: 0px;
+  z-index: 999;
 }

@@ -35,15 +35,16 @@ Show the functinctionality of *En Route* to your friends without the need of you
 The app uses React on the front end and Express on the back end. You need a MongoDB database running. Mock data can be populated by running `todo`. EsLint configuration files are present in both `client`and `server`folder.
 To get started, run `npm i` inside the root, client and server folder. Run `nodemon`inside the server folder to start the back end. Run `npm start` inside the client folder to start the front end.
 
-# .env file example *client*
+### .env file example *client*
 
 ```
 REACT_APP_MAPBOX_TOKEN=
+REACT_APP_THUNDERFOREST_TOKEN=
 REACT_APP_DB_HOST=
 REACT_APP_DB_PORT=
 ```
 
-# .env file example *server*
+### .env file example *server*
 
 ```
 DB_HOST=
