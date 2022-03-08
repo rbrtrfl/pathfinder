@@ -21,7 +21,7 @@ ul {
 
 .mytracks-divider {
   height: 1px;
-  background-color: black;
+  background-color: lightgrey;
 }
 
 .bold {
@@ -33,6 +33,7 @@ ul {
 }
 
 h2 {
+  font-weight: 250;
   font-size: large;
   align-self: center;
   margin: 0 auto;

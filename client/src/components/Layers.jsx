@@ -3,10 +3,13 @@ import {
   Marker, GeoJSON, CircleMarker,
 } from 'react-leaflet';
 import L from 'leaflet';
+import ShowChartIcon from '@mui/icons-material/ShowChart';
 import DrawRoute from './DrawRoute';
 import EnRoute from './EnRoute';
 
-function Layers({ selectedTrack, myTracks, menuItem }) {
+function Layers({
+  selectedTrack, myTracks, menuItem, showElevation, setShowElevation,
+}) {
   const [displayedTrack, setDisplayedTrack] = useState(null);
   const [endPoints, setEndPoints] = useState({});
 
@@ -19,6 +22,10 @@ function Layers({ selectedTrack, myTracks, menuItem }) {
     }
   }, [selectedTrack]);
 
+  function eleButtonHandler() {
+    return (showElevation) ? setShowElevation(false) : setShowElevation(true);
+  }
+
   // TODO: make the markers look good
   function createMarker(letter) {
     return new L.divIcon({ // eslint-disable-line
@@ -30,6 +37,11 @@ function Layers({ selectedTrack, myTracks, menuItem }) {
 
   return (
     <div>
+      <div className="elevation-button-container">
+        <button type="button" className="elevation-button" onClick={eleButtonHandler}>
+          <ShowChartIcon />
+        </button>
+      </div>
       {(displayedTrack)
         ? (
           <div>
@@ -57,6 +69,7 @@ function Layers({ selectedTrack, myTracks, menuItem }) {
                 <GeoJSON
                   data={displayedTrack}
                   pathOptions={{ color: 'red' }}
+                  onClick={() => console.log('click')}
                 />
               )}
           </div>

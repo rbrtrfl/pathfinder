@@ -7,7 +7,7 @@ import {
 import Layers from './Layers';
 
 function Map({
-  bounds, selectedTrack, myTracks, menuItem,
+  bounds, selectedTrack, myTracks, menuItem, showElevation, setShowElevation,
 }) {
   // const center = [46.8403752, 9.0290986];
   const thunderforestToken = process.env.REACT_APP_THUNDERFOREST_TOKEN;
@@ -17,7 +17,13 @@ function Map({
   return (
     <div className="map">
       <MapContainer bounds={bounds} tap={false} zoomSnap={0.2}>
-        <Layers selectedTrack={selectedTrack} myTracks={myTracks} menuItem={menuItem} />
+        <Layers
+          selectedTrack={selectedTrack}
+          myTracks={myTracks}
+          menuItem={menuItem}
+          showElevation={showElevation}
+          setShowElevation={setShowElevation}
+        />
         <LayersControl position="topright">
           <LayersControl.BaseLayer checked name="Thunderforest_Landscape">
             <TileLayer

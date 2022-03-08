@@ -47,3 +47,21 @@
   bottom: 0px;
   z-index: 999;
 }
+
+.elevation-button-container {
+  top: 65px;
+  right: 11px;
+  position: absolute;
+  z-index: 999;
+}
+.elevation-button {
+  border-radius: 4.5px;
+  letter-spacing: -1px;
+  width: 46.5px;
+  height: 46.5px;
+  margin: 0px;
+  padding: 9px;
+  border: 2px solid rgb(147, 147, 147);
+  font-size: large;
+  font-weight: bold;
+}
