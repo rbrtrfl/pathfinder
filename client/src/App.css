@@ -11,7 +11,6 @@
 .main-container {
   height: 100%;
   flex-grow: 1;
-
   position: relative;
 }
 
@@ -28,16 +27,6 @@
   font-weight: bold;
 }
 
-.get-route-menu {
-  position: absolute;
-  bottom: 100px;
-  left: 100px;
-  background-color: white;
-  z-index: 999;
-  cursor: pointer;
-  padding: 5px;
-}
-
 .elevation-container {
   height: 150px;
   width: 100vw;
@@ -48,13 +37,11 @@
   z-index: 999;
 }
 
-.elevation-button-container {
+.elevation-button {
   top: 65px;
   right: 11px;
   position: absolute;
   z-index: 999;
-}
-.elevation-button {
   border-radius: 4.5px;
   letter-spacing: -1px;
   width: 46.5px;

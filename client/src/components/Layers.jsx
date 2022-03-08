@@ -37,11 +37,13 @@ function Layers({
 
   return (
     <div>
-      <div className="elevation-button-container">
-        <button type="button" className="elevation-button" onClick={eleButtonHandler}>
-          <ShowChartIcon />
-        </button>
-      </div>
+      {(menuItem !== 'drawroute')
+        ? (
+          <button type="button" className="elevation-button" onClick={eleButtonHandler}>
+            <ShowChartIcon />
+          </button>
+        )
+        : ''}
       {(displayedTrack)
         ? (
           <div>

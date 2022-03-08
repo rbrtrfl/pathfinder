@@ -5,18 +5,16 @@ import {
 import L from 'leaflet';
 import * as apiService from '../services/ApiService';
 import { MyContext } from '../helpers/Context';
+import './DrawRoute.css';
 
 function DrawRoute() {
   const [polyline, setPolyline] = useState([]);
-  const [coordinatesString, setCoordinatesString] = useState('');
-  const [geoJson, setGeoJson] = useState(null);
 
   const { myTracks, setMyTracks, setSelectedTrack } = useContext(MyContext);
 
   useMapEvents({
     click: (e) => {
       setPolyline([...polyline, e.latlng]);
-      setCoordinatesString((coordinatesString) ? `${coordinatesString};${e.latlng.lng},${e.latlng.lat}` : `${e.latlng.lng},${e.latlng.lat}`);
     },
   });
 
@@ -34,13 +32,24 @@ function DrawRoute() {
     };
   }
 
-  function clickHandler() {
-    const croppedCoordinates = coordinatesString.slice(0, coordinatesString.length - (20 * 2));
-    apiService.route(croppedCoordinates)
+  function convertRouteToTrack() {
+    // TODO: draw multiple tracks after another
+    setSelectedTrack(null);
+    let string = polyline.map((e) => `${e.lng},${e.lat};`).join('');
+    const splitChar = ';';
+
+    function trimAtCharFromBack(str, char) {
+      const revString = str.split('').reverse().join('');
+      const pos = revString.indexOf(char);
+      string = revString.slice(pos + 1, revString.length).split('').reverse().join('');
+    }
+    trimAtCharFromBack(string, splitChar);
+    trimAtCharFromBack(string, splitChar);
+
+    apiService.route(string)
       .then((data) => {
         if (data.code === 'Ok') {
           const geojson = createGeoJSON(data.routes[0].geometry);
-          setGeoJson(geojson); // TODO: delete this
 
           apiService.postRoute(geojson)
             .then((response) => {
@@ -50,21 +59,45 @@ function DrawRoute() {
         }
       });
     setPolyline([]);
-    setCoordinatesString('');
+  }
+
+  function revertLastDraw() {
+    const minusLast = polyline.slice(0, polyline.length - 2);
+    setPolyline(minusLast);
+  }
+
+  function abortDraw() {
+    setPolyline([]);
   }
 
   return (
     <div>
-      <button type="button" onClick={() => clickHandler()} className="get-route-menu">get Route</button>
+      <div
+        className="get-route-menu"
+      >
+        <button
+          className={polyline.length > 0 ? 'selected' : ''}
+          type="button"
+          onClick={() => convertRouteToTrack()}
+        >
+          ✓
+        </button>
+        <button
+          className={polyline.length > 0 ? 'selected' : ''}
+          type="button"
+          onClick={() => revertLastDraw()}
+        >
+          ↩
+        </button>
+        <button
+          className="selected"
+          type="button"
+          onClick={() => abortDraw()}
+        >
+          ✕
+        </button>
+      </div>
       <Polyline pathOptions={{ color: 'blue' }} positions={polyline} />
-      {(geoJson)
-        ? (
-          <GeoJSON
-            data={geoJson}
-            pathOptions={{ color: 'red' }}
-          />
-        )
-        : ''}
     </div>
   );
 }

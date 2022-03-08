@@ -1,0 +1,24 @@
+.get-route-menu {
+  position: absolute;
+  bottom: 0px;
+  right: 25.5%;
+  background-color: white;
+  z-index: 999;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 4.5px 4.5px 0 0;
+}
+
+button {
+  border: none;
+  color: lightgray;
+  background-color: white;
+  height: 30px;
+  width: 30px;
+  margin: 0px;
+  padding: 0px;
+  font-size: large;
+  font-weight: bolder;
+}
