@@ -1,14 +1,13 @@
-import React, { useState, useContext } from 'react';
-import {
-  useMapEvents, Polyline, GeoJSON,
-} from 'react-leaflet';
-import L from 'leaflet';
+import React, { useState, useContext} from 'react';
+import { useMapEvents, Polyline } from 'react-leaflet';
 import * as apiService from '../services/ApiService';
 import { MyContext } from '../helpers/Context';
+import CustomMarker from './CustomMarker';
 import './DrawRoute.css';
 
 function DrawRoute() {
   const [polyline, setPolyline] = useState([]);
+  const [showSaveForm, setShowSaveForm] = useState(false);
 
   const { myTracks, setMyTracks, setSelectedTrack } = useContext(MyContext);
 
@@ -66,38 +65,64 @@ function DrawRoute() {
     setPolyline(minusLast);
   }
 
+  function toggleSaveForm() {
+    setShowSaveForm(true);
+  }
+
   function abortDraw() {
     setPolyline([]);
   }
 
   return (
     <div>
-      <div
-        className="get-route-menu"
-      >
-        <button
-          className={polyline.length > 0 ? 'selected' : ''}
-          type="button"
-          onClick={() => convertRouteToTrack()}
-        >
-          ✓
-        </button>
-        <button
-          className={polyline.length > 0 ? 'selected' : ''}
-          type="button"
-          onClick={() => revertLastDraw()}
-        >
-          ↩
-        </button>
-        <button
-          className="selected"
-          type="button"
-          onClick={() => abortDraw()}
-        >
-          ✕
-        </button>
-      </div>
       <Polyline pathOptions={{ color: 'blue' }} positions={polyline} />
+      {polyline && polyline.map((item, index) => (
+        <CustomMarker
+          key={index}
+          position={item}
+          letter={index}
+          color="blue"
+        />
+      ))}
+      {(showSaveForm)
+        ? (
+          <div className="save-form" id="menu-overlay">
+            <form>
+              <input />
+              <button
+                className={polyline.length > 0 ? 'selected' : ''}
+                type="button"
+                onClick={() => convertRouteToTrack()}
+              >
+                ✓
+              </button>
+            </form>
+          </div>
+        ) : (
+          <div className="get-route-menu" id="menu-overlay">
+            <button
+              className={polyline.length > 0 ? 'selected' : ''}
+              type="button"
+              onClick={() => toggleSaveForm()}
+            >
+              ✓
+            </button>
+            <button
+              className={polyline.length > 0 ? 'selected' : ''}
+              type="button"
+              onClick={() => revertLastDraw()}
+            >
+              ↩
+            </button>
+            <button
+              className={polyline.length > 0 ? 'selected' : ''}
+              type="button"
+              onClick={() => abortDraw()}
+            >
+              ✕
+            </button>
+          </div>
+        )}
     </div>
   );
 }

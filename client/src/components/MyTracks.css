@@ -3,8 +3,13 @@ ul {
   padding: 0px;
 }
 
-.track-list-scroll {
-  height: 70vh;
+.track-list-small {
+  overflow: scroll;
+  height: 68vh;
+}
+
+.track-list-large {
+  height: 85vh;
   overflow: scroll;
 }
 

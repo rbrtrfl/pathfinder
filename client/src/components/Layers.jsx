@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Marker, GeoJSON, CircleMarker,
-} from 'react-leaflet';
-import L from 'leaflet';
+import { GeoJSON } from 'react-leaflet';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
-import DrawRoute from './DrawRoute';
 import EnRoute from './EnRoute';
+import DrawRoute from './DrawRoute';
+import CustomMarker from './CustomMarker';
 
 function Layers({
   selectedTrack, myTracks, menuItem, showElevation, setShowElevation,
@@ -26,59 +24,42 @@ function Layers({
     return (showElevation) ? setShowElevation(false) : setShowElevation(true);
   }
 
-  // TODO: make the markers look good
-  function createMarker(letter) {
-    return new L.divIcon({ // eslint-disable-line
-      html: `<svg><text x="100" y="100" fill="white">${letter}</text></svg>`,
-      iconAnchor: [109, 92],
-      className: 'marker',
-    });
-  }
-
   return (
     <div>
-      {(menuItem !== 'drawroute')
-        ? (
-          <button type="button" className="elevation-button" onClick={eleButtonHandler}>
+      {(menuItem !== 'drawroute' && selectedTrack !== null)
+        && (
+          <button
+            type="button"
+            className={showElevation ? 'elevation-button selected' : 'elevation-button'}
+            onClick={eleButtonHandler}
+          >
             <ShowChartIcon />
           </button>
-        )
-        : ''}
+        )}
       {(displayedTrack)
-        ? (
+        && (
           <div>
-            <CircleMarker
-              center={endPoints[0]}
-              pathOptions={{ color: 'red' }}
-              radius={15}
-            />
-            <Marker
+            <CustomMarker
               position={endPoints[0]}
-              icon={createMarker('A')}
+              letter="A"
+              color={menuItem === 'enroute' ? 'purple' : 'red'}
             />
-
-            <CircleMarker
-              center={endPoints[1]}
-              pathOptions={{ color: 'red' }}
-              radius={15}
-            />
-            <Marker
+            <CustomMarker
               position={endPoints[1]}
-              icon={createMarker('B')}
+              letter="B"
+              color={menuItem === 'enroute' ? 'purple' : 'red'}
             />
-            {(menuItem === 'enroute') ? ''
-              : (
-                <GeoJSON
-                  data={displayedTrack}
-                  pathOptions={{ color: 'red' }}
-                  onClick={() => console.log('click')}
-                />
-              )}
+            {(menuItem !== 'enroute')
+               && (
+               <GeoJSON
+                 data={displayedTrack}
+                 pathOptions={{ color: 'red' }}
+               />
+               )}
           </div>
-        )
-        : ''}
-      {(menuItem === 'drawroute') ? <DrawRoute /> : ''}
-      {(menuItem === 'enroute') ? <EnRoute /> : ''}
+        )}
+      {(menuItem === 'enroute') && <EnRoute /> }
+      {(menuItem === 'drawroute') && <DrawRoute /> }
     </div>
   );
 }

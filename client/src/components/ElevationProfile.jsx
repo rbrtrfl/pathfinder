@@ -50,7 +50,11 @@ function ElevationProfile({ selectedTrack, myTracks }) {
 
   return (
     <div className="elevation-container">
-      <AreaChart width={370} height={150} data={data}>
+      <AreaChart
+        width={window.innerWidth}
+        height={((window.innerHeight / 100) * 20)}
+        data={data}
+      >
         <Area type="monotone" dataKey="elevation" stroke="white" strokeWidth={3} fillOpacity={1} fill="grey" />
         <CartesianGrid stroke="grey" />
         <XAxis dataKey="length" minTickGap={20} stroke="white" />

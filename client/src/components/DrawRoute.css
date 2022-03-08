@@ -22,3 +22,19 @@ button {
   font-size: large;
   font-weight: bolder;
 }
+
+.save-form {
+ position: absolute;
+ background-color: aquamarine;
+ z-index: 999;
+ height: 7vh;
+ width: 100vw;
+ bottom: 0px;
+ display: flex;
+ justify-content: space-around;
+ align-items: center;
+}
+
+.hide {
+  display: hidden;
+}

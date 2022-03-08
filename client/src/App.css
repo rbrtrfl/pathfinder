@@ -23,12 +23,12 @@
 }
 
 .marker {
-  font-size: x-large;
+  font-size: 1.3em;
   font-weight: bold;
 }
 
 .elevation-container {
-  height: 150px;
+  height: 20vh;
   width: 100vw;
   background-color: black;
   opacity: 0.4;
