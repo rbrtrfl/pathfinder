@@ -37,6 +37,7 @@
 }
 
 .elevation-button {
+  color: grey;
   top: 65px;
   right: 11px;
   position: absolute;

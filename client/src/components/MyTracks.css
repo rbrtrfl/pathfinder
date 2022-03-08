@@ -17,6 +17,7 @@ ul {
   padding: 15px;
   min-height: 60px;
   display: flex;
+  align-items: center;
 }
 
 .mytracks-selected {
@@ -30,11 +31,12 @@ ul {
 }
 
 .bold {
-  font-weight: bold;
+  font-weight: 250;
 }
 
 .settings-item {
-  align-self: center
+  flex-grow: 1;
+  flex: 1 1 0px;
 }
 
 h2 {
@@ -42,4 +44,13 @@ h2 {
   font-size: large;
   align-self: center;
   margin: 0 auto;
+}
+
+input {
+  min-width: 80px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
 }

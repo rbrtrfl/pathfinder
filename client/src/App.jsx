@@ -6,7 +6,7 @@ import Menu from './components/Menu';
 console.clear();
 
 function App() {
-  const [menuItem, setMenuItem] = useState('drawroute');
+  const [menuItem, setMenuItem] = useState('settings');
 
   return (
     <div className="app-container">

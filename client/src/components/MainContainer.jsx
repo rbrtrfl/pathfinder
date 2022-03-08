@@ -15,8 +15,8 @@ function MainContainer({ menuItem }) {
   const [selectedTrack, setSelectedTrack] = useState(null);
   const [showElevation, setShowElevation] = useState(false);
   const [bounds, setBounds] = useState([
-    [46.84, 9.02],
-    [46.89, 9.02],
+    [46.82, 9.02],
+    [46.89, 9.01],
   ]);
 
   useEffect(() => {

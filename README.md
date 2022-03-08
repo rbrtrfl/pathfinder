@@ -2,9 +2,7 @@
 
 # pathfinder
 
-todo
-Plan your hiking adventures, multi-day-hikes and through-hikes and organize your hiking days according to your progress.
-todo
+Plan your hiking adventures, multi-day-hikes and through-hikes and organize upcoming hiking days according to your progress.
 
 ## Main Menu
 
