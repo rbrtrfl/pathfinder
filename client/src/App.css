@@ -30,8 +30,7 @@
 .elevation-container {
   height: 20vh;
   width: 100vw;
-  background-color: black;
-  opacity: 0.4;
+  background-color: rgba(0,0,0,0.3);
   position: absolute;
   bottom: 0px;
   z-index: 999;

@@ -4,8 +4,9 @@ import { TracksContext } from '../contexts/Contexts';
 import './DrawRoute.css';
 
 function DrawRouteMenu({ myTracks, setMyTracks, setSelectedTrack }) {
-  const { polyline, setPolyline } = useContext(TracksContext);
-  const [showSaveForm, setShowSaveForm] = useState(false);
+  const {
+    polyline, setPolyline, showSaveForm, setShowSaveForm,
+  } = useContext(TracksContext);
 
   function createGeoJSON(data, name) {
     // TODO: create name inside app
@@ -63,6 +64,7 @@ function DrawRouteMenu({ myTracks, setMyTracks, setSelectedTrack }) {
 
   function abortDraw() {
     setPolyline([]);
+    setShowSaveForm(false);
   }
 
   return (
@@ -71,12 +73,26 @@ function DrawRouteMenu({ myTracks, setMyTracks, setSelectedTrack }) {
         ? (
           <div className="save-form">
             <form onSubmit={convertRouteToTrack}>
-              <input type="text" name="input" />
+              <input
+                type="text"
+                required
+                name="input"
+                placeholder="name your track"
+              />
               <button
+                id="white"
                 className={polyline.length > 0 ? 'selected' : ''}
                 type="submit"
               >
                 ✓
+              </button>
+              <button
+                id="red"
+                type="button"
+                className={polyline.length > 0 ? 'selected' : ''}
+                onClick={abortDraw}
+              >
+                ✕
               </button>
             </form>
           </div>
