@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import { MyContext } from '../helpers/Context';
+import { TracksContext } from '../contexts/Contexts';
 
 function Settings() {
-  const { setSettings } = useContext(MyContext);
+  const { setSettings } = useContext(TracksContext);
   return (
     <div>
       <ul>

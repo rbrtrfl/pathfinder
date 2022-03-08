@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { postTrack } from '../services/ApiService';
-import { MyContext } from '../helpers/Context';
+import { TracksContext } from '../contexts/Contexts';
 
 function FileUploadForm() {
-  const { myTracks, setMyTracks } = useContext(MyContext);
+  const { myTracks, setMyTracks } = useContext(TracksContext);
 
   function clickHandler(event) {
     event.preventDefault();

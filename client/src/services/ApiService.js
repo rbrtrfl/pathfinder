@@ -30,7 +30,7 @@ export function postTrack(file) {
     .catch((error) => console.error(error)); // eslint-disable-line no-console
 }
 
-export function postRoute(geojson) {
+export function postRoute(geojson, name) {
   const dbEntry = {
     geojson,
   };

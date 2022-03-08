@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { CircleMarker, Marker, Polyline } from 'react-leaflet';
-import { MyContext } from '../helpers/Context';
+import { TracksContext } from '../contexts/Contexts';
 import './EnRoute.css';
 
 function EnRoute() {
@@ -10,7 +10,7 @@ function EnRoute() {
   const [pastTrack, setPastTrack] = useState(null);
   const [futureTrack, setFutureTrack] = useState(null);
 
-  const { selectedTrack, myTracks } = useContext(MyContext);
+  const { selectedTrack, myTracks } = useContext(TracksContext);
 
   function distance(p) {
     return Math.sqrt((location[0] - p[0]) ** 2 + (location[1] - p[1]) ** 2);
