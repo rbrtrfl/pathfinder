@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { CircleMarker, Marker, Polyline } from 'react-leaflet';
 import { TracksContext } from '../contexts/Contexts';
 import './EnRoute.css';
+import getDestinations from '../tools/Calculations';
 
 function EnRoute() {
   const location = [46.86765904130082, 9.008682069560534];
@@ -13,14 +14,18 @@ function EnRoute() {
   const { selectedTrack, myTracks } = useContext(TracksContext);
 
   function distance(p) {
+    // calculates distance between two points
     return Math.sqrt((location[0] - p[0]) ** 2 + (location[1] - p[1]) ** 2);
   }
 
   useEffect(() => {
     if (selectedTrack) {
       const { geojson } = myTracks.find((element) => element._id === selectedTrack);
+      getDestinations(geojson);
+      // returns an array of 2d coordinates (omits the optional third number, which is elevation)
       const points = geojson.features.map((feature) => feature.geometry.coordinates.map((c) => [c[1], c[0]])).flat(); // eslint-disable-line
-      const closest = points.reduce((a, b, i) => distance(a) < distance(b) ? a : b); // eslint-disable-line
+      // compares distance to each point in array and returns smallest
+      const closest = points.reduce((a, b) => distance(a) < distance(b) ? a : b); // eslint-disable-line
       setClosestPoint(closest);
 
       const index = points.findIndex((element) => element === closest);
