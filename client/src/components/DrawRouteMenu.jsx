@@ -33,20 +33,20 @@ function DrawRouteMenu({ myTracks, setMyTracks, setSelectedTrack }) {
             .then((response) => {
               setMyTracks([...myTracks, response]);
               setSelectedTrack(response._id);
+              setPolyline([]);
+              setShowSaveForm(false);
             });
         }
       });
-    setPolyline([]);
-    setShowSaveForm(false);
+  }
+
+  function toggleSaveForm() {
+    if (polyline.length > 1) setShowSaveForm(true);
   }
 
   function revertLastDraw() {
     const minusLast = polyline.slice(0, polyline.length - 1);
     setPolyline(minusLast);
-  }
-
-  function toggleSaveForm() {
-    if (polyline.length > 1) setShowSaveForm(true);
   }
 
   function abortDraw() {

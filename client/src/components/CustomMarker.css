@@ -1,0 +1,33 @@
+.marker-oval {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: white;
+  height: 20px;
+  width: 50px;
+  border-radius: 10px;
+  margin: auto;
+  margin-top: -10px;
+  margin-left: -25px;
+}
+
+.marker-circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: white;
+  height: 20px;
+  width: 20px;
+  border-radius: 10px;
+  margin: auto;
+  margin-top: -10px;
+  margin-left: -10px;
+}
+
+.empty {
+  background-color: transparent;
+}

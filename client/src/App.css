@@ -22,11 +22,6 @@
   justify-content: center;
 }
 
-.marker {
-  font-size: 1.2em;
-  font-weight: bold;
-}
-
 .elevation-container {
   height: 20vh;
   width: 100vw;

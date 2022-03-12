@@ -24,8 +24,8 @@ function DrawRoute({ displayedTrack }) {
         color="grey"
       />
       )}
-      <Polyline pathOptions={{ color: 'blue' }} positions={polyline} />
-      {(polyline) && polyline.map((item, index) => (
+      {(polyline)
+      && polyline.map((item, index) => (
         <CustomMarker
           key={index}
           position={item}
@@ -33,6 +33,8 @@ function DrawRoute({ displayedTrack }) {
           color="blue"
         />
       ))}
+      {(polyline)
+      && <Polyline pathOptions={{ color: 'blue' }} positions={polyline} />}
     </div>
   );
 }
