@@ -8,7 +8,7 @@ function Track({ geojson, color }) {
     <div>
       <CustomMarker
         position={getEndPoints(geojson)[0]}
-        letter="A"
+        letter="ABC"
         color={color}
       />
       <CustomMarker

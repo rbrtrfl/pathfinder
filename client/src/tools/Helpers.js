@@ -6,9 +6,12 @@ function getEndPoints(geojson) {
   const allPoints = geojson.features.map((feature) => feature.geometry.coordinates.map((c) => [c[1], c[0]])).flat(); // eslint-disable-line
   return ([allPoints[0], allPoints[allPoints.length - 1]]);
 }
-function coordinatesToGeoJSON(points) {
+function coordinatesToGeoJSON(points, name) {
   return {
     type: 'FeatureCollection',
+    properties: {
+      name,
+    },
     features: [{
       type: 'Feature',
       geometry: {

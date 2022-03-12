@@ -2,9 +2,10 @@ import React, { useContext } from 'react';
 import { useMapEvents, Polyline } from 'react-leaflet';
 import { TracksContext } from '../contexts/Contexts';
 import CustomMarker from '../components/CustomMarker';
+import Track from '../components/Track';
 import './DrawRoute.css';
 
-function DrawRoute() {
+function DrawRoute({ displayedTrack }) {
   const { polyline, setPolyline } = useContext(TracksContext);
 
   useMapEvents({
@@ -16,8 +17,15 @@ function DrawRoute() {
 
   return (
     <div>
+      {(displayedTrack)
+      && (
+      <Track
+        geojson={displayedTrack}
+        color="grey"
+      />
+      )}
       <Polyline pathOptions={{ color: 'blue' }} positions={polyline} />
-      {polyline && polyline.map((item, index) => (
+      {(polyline) && polyline.map((item, index) => (
         <CustomMarker
           key={index}
           position={item}

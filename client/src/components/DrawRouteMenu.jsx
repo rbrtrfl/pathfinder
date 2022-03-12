@@ -1,26 +1,13 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import * as apiService from '../services/ApiService';
 import { TracksContext } from '../contexts/Contexts';
 import '../views/DrawRoute.css';
+import { coordinatesToGeoJSON } from '../tools/Helpers';
 
 function DrawRouteMenu({ myTracks, setMyTracks, setSelectedTrack }) {
   const {
     polyline, setPolyline, showSaveForm, setShowSaveForm,
   } = useContext(TracksContext);
-
-  function createGeoJSON(data, name) {
-    // TODO: create name inside app
-    return {
-      type: 'FeatureCollection',
-      properties: {
-        name,
-      },
-      features: [{
-        type: 'Feature',
-        geometry: data,
-      }],
-    };
-  }
 
   function convertRouteToTrack(event) {
     event.preventDefault();
@@ -40,7 +27,7 @@ function DrawRouteMenu({ myTracks, setMyTracks, setSelectedTrack }) {
     apiService.route(string)
       .then((data) => {
         if (data.code === 'Ok') {
-          const geojson = createGeoJSON(data.routes[0].geometry, event.target.input.value);
+          const geojson = coordinatesToGeoJSON(data.routes[0].geometry.coordinates, event.target.input.value);
 
           apiService.postRoute(geojson)
             .then((response) => {
