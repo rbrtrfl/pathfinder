@@ -1,15 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { CircleMarker, Marker, Polyline } from 'react-leaflet';
+import * as turf from '@turf/turf';
 import { TracksContext } from '../contexts/Contexts';
 import './EnRoute.css';
 import getDestinations from '../tools/Calculations';
+import CustomMarker from './CustomMarker';
 
 function EnRoute() {
-  const location = [46.86765904130082, 9.008682069560534];
+  const location = [46.880946592687366, 8.997399356476118];
 
   const [closestPoint, setClosestPoint] = useState(location);
   const [pastTrack, setPastTrack] = useState(null);
   const [futureTrack, setFutureTrack] = useState(null);
+  const [destinations, setDestinations] = useState(null);
 
   const { selectedTrack, myTracks } = useContext(TracksContext);
 
@@ -18,19 +21,36 @@ function EnRoute() {
     return Math.sqrt((location[0] - p[0]) ** 2 + (location[1] - p[1]) ** 2);
   }
 
+  function pointsArrToGeoJSON(points) {
+    return {
+      type: 'FeatureCollection',
+      features: [{
+        type: 'Feature',
+        geometry: {
+          type: 'LineString',
+          coordinates: points,
+        },
+      }],
+    };
+  }
+
   useEffect(() => {
     if (selectedTrack) {
       const { geojson } = myTracks.find((element) => element._id === selectedTrack);
-      getDestinations(geojson);
       // returns an array of 2d coordinates (omits the optional third number, which is elevation)
       const points = geojson.features.map((feature) => feature.geometry.coordinates.map((c) => [c[1], c[0]])).flat(); // eslint-disable-line
-      // compares distance to each point in array and returns smallest
-      const closest = points.reduce((a, b) => distance(a) < distance(b) ? a : b); // eslint-disable-line
-      setClosestPoint(closest);
+      const geometryFlat = geojson.features.map((feature) => feature.geometry.coordinates).flat();
 
-      const index = points.findIndex((element) => element === closest);
-      setPastTrack(points.slice(0, index));
-      setFutureTrack(points.slice(index));
+      const line = turf.lineString(points);
+      const closest = turf.nearestPointOnLine(line, location, { units: 'kilometers' });
+
+      setClosestPoint(closest.geometry.coordinates);
+
+      setPastTrack(points.slice(0, closest.properties.index));
+      setFutureTrack(points.slice(closest.properties.index));
+
+      const futureGeoJSON = pointsArrToGeoJSON(geometryFlat.slice(closest.properties.index));
+      setDestinations(getDestinations(futureGeoJSON));
     }
   }, []);
 
@@ -52,6 +72,16 @@ function EnRoute() {
         pathOptions={{ color: 'blue' }}
         radius={20}
       />
+      {destinations
+      && destinations.map((item, index) => (
+        <CustomMarker
+          key={index}
+          // flip coordinates
+          position={[item[1], item[0]]}
+          letter={item[2]}
+          color="purple"
+        />
+      ))}
       {(pastTrack
         ? <Polyline pathOptions={{ color: 'purple', dashArray: '5,10' }} positions={pastTrack} />
         : '')}

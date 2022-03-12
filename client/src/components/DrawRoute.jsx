@@ -9,6 +9,7 @@ function DrawRoute() {
 
   useMapEvents({
     click: (e) => {
+      console.log(e.latlng);
       setPolyline([...polyline, e.latlng]);
     },
   });

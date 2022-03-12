@@ -10,7 +10,7 @@ import DrawRouteMenu from './DrawRouteMenu';
 
 function MainContainer({ menuItem }) {
   const [polyline, setPolyline] = useState([]);
-  const [showSaveForm, setShowSaveForm] = useState(true);
+  const [showSaveForm, setShowSaveForm] = useState(false);
   const [myTracks, setMyTracks] = useState([]);
   const [selectedTrack, setSelectedTrack] = useState(null);
   const [showElevation, setShowElevation] = useState(false);
