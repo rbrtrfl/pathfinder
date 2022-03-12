@@ -5,34 +5,18 @@ import { TracksContext } from '../contexts/Contexts';
 import './EnRoute.css';
 import getDestinations from '../tools/Calculations';
 import CustomMarker from '../components/CustomMarker';
+import { coordinatesToGeoJSON } from '../tools/Helpers';
+import Track from '../components/Track';
 
 function EnRoute() {
+  const { selectedTrack, myTracks } = useContext(TracksContext);
+
   const location = [46.880946592687366, 8.997399356476118];
 
   const [closestPoint, setClosestPoint] = useState(location);
   const [pastTrack, setPastTrack] = useState(null);
-  const [futureTrack, setFutureTrack] = useState(null);
+  const [futureGeoJSON, setFutureGeoJSON] = useState(null);
   const [destinations, setDestinations] = useState(null);
-
-  const { selectedTrack, myTracks } = useContext(TracksContext);
-
-  function distance(p) {
-    // calculates distance between two points
-    return Math.sqrt((location[0] - p[0]) ** 2 + (location[1] - p[1]) ** 2);
-  }
-
-  function pointsArrToGeoJSON(points) {
-    return {
-      type: 'FeatureCollection',
-      features: [{
-        type: 'Feature',
-        geometry: {
-          type: 'LineString',
-          coordinates: points,
-        },
-      }],
-    };
-  }
 
   useEffect(() => {
     if (selectedTrack) {
@@ -47,10 +31,10 @@ function EnRoute() {
       setClosestPoint(closest.geometry.coordinates);
 
       setPastTrack(points.slice(0, closest.properties.index));
-      setFutureTrack(points.slice(closest.properties.index));
 
-      const futureGeoJSON = pointsArrToGeoJSON(geometryFlat.slice(closest.properties.index));
-      setDestinations(getDestinations(futureGeoJSON));
+      const geoJSONSection = coordinatesToGeoJSON(geometryFlat.slice(closest.properties.index));
+      setFutureGeoJSON(geoJSONSection);
+      setDestinations(getDestinations(geoJSONSection));
     }
   }, []);
 
@@ -84,11 +68,16 @@ function EnRoute() {
         />
       ))}
       {(pastTrack
-        ? <Polyline pathOptions={{ color: 'purple', dashArray: '5,10' }} positions={pastTrack} />
-        : '')}
-      {(futureTrack
-        ? <Polyline pathOptions={{ color: 'purple' }} positions={futureTrack} />
-        : '')}
+        && <Polyline pathOptions={{ color: 'purple', dashArray: '5,10' }} positions={pastTrack} />
+        )}
+      {(futureGeoJSON
+        && (
+        <Track
+          geojson={futureGeoJSON}
+          color="purple"
+        />
+        )
+        )}
     </div>
   );
 }

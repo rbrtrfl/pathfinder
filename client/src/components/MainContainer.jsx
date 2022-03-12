@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import L from 'leaflet';
-import Map from './Map';
+import Map from './MapContainer';
 import MyTracks from '../views/MyTracks';
 import Settings from '../views/Settings';
 import { getAll } from '../services/ApiService';

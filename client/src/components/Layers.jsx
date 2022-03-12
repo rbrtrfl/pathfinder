@@ -3,7 +3,7 @@ import ShowChartIcon from '@mui/icons-material/ShowChart';
 import EnRoute from '../views/EnRoute';
 import DrawRoute from '../views/DrawRoute';
 
-import Track from './Track';
+import Map from '../views/Map';
 
 function Layers({
   selectedTrack, myTracks, menuItem, showElevation, setShowElevation,
@@ -24,11 +24,12 @@ function Layers({
             <ShowChartIcon />
           </button>
         )}
-      <Track
+      {(menuItem === 'map') && (
+      <Map
         selectedTrack={selectedTrack}
         myTracks={myTracks}
-        menuItem={menuItem}
       />
+      ) }
       {(menuItem === 'enroute') && <EnRoute /> }
       {(menuItem === 'drawroute') && <DrawRoute /> }
     </div>
