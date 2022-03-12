@@ -4,7 +4,7 @@ import * as turf from '@turf/turf';
 import { TracksContext } from '../contexts/Contexts';
 import './EnRoute.css';
 import getDestinations from '../tools/Calculations';
-import CustomMarker from './CustomMarker';
+import CustomMarker from '../components/CustomMarker';
 
 function EnRoute() {
   const location = [46.880946592687366, 8.997399356476118];
@@ -64,7 +64,7 @@ function EnRoute() {
 
   return (
     <div>
-      <div className="fade">
+      <div>
         <Marker position={location} icon={createMarker()} />
       </div>
       <CircleMarker
@@ -78,8 +78,9 @@ function EnRoute() {
           key={index}
           // flip coordinates
           position={[item[1], item[0]]}
-          letter={item[2]}
+          string={item[2]}
           color="purple"
+          type="oval"
         />
       ))}
       {(pastTrack

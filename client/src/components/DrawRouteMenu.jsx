@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import * as apiService from '../services/ApiService';
 import { TracksContext } from '../contexts/Contexts';
-import './DrawRoute.css';
+import '../views/DrawRoute.css';
 
 function DrawRouteMenu({ myTracks, setMyTracks, setSelectedTrack }) {
   const {

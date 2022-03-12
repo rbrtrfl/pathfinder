@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useMapEvents, Polyline } from 'react-leaflet';
 import { TracksContext } from '../contexts/Contexts';
-import CustomMarker from './CustomMarker';
+import CustomMarker from '../components/CustomMarker';
 import './DrawRoute.css';
 
 function DrawRoute() {

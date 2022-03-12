@@ -1,7 +1,7 @@
 import React from 'react';
 import './MyTracks.css';
-import MyTracksItem from './MyTracksItem';
-import FileUploadForm from './FileUploadForm';
+import MyTracksItem from '../components/MyTracksItem';
+import FileUploadForm from '../components/FileUploadForm';
 
 function MyTracks({ myTracks, selectedTrack, setSelectedTrack }) {
   function setChosen(id) { // eslint-disable-line

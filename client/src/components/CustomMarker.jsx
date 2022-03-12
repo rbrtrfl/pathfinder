@@ -1,26 +1,34 @@
 import React from 'react';
 import { CircleMarker, Marker } from 'react-leaflet';
 
-function CustomMarker({ position, letter, color }) {
+function CustomMarker({
+  position, string, color, type,
+}) {
+  function createMarker(text) {
+      if (type === 'oval') return new L.divIcon({ // eslint-disable-line
+      html: `<svg>
+      <rect x="97" y="85" width="50" height="20" rx="10" fill="${color}"/>
+      <text x="103" y="99.5" fill="white">${text}</text>
+      </svg>`,
+      iconAnchor: [120, 95.5],
+      className: 'marker',
+    });
 
-  function createMarker(letter) {
       return new L.divIcon({ // eslint-disable-line
-      html: `<svg><text x="100" y="100" fill="white">${letter}</text></svg>`,
-      iconAnchor: [105.5, 94.5],
+      html: `<svg>
+      <circle cx="120" cy="91" r="10" fill="${color}">
+      <text x="115" y="99" fill="white">${text}</text>
+        </svg>`,
+      iconAnchor: [120, 95.5],
       className: 'marker',
     });
   }
 
   return (
     <div>
-      <CircleMarker
-        center={position}
-        pathOptions={{ color, fillColor: color, fillOpacity: 1 }}
-        radius={10}
-      />
       <Marker
         position={position}
-        icon={createMarker(letter)}
+        icon={createMarker(string)}
       />
     </div>
   );

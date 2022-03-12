@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import L from 'leaflet';
 import Map from './Map';
-import MyTracks from './MyTracks';
-import Settings from './Settings';
+import MyTracks from '../views/MyTracks';
+import Settings from '../views/Settings';
 import { getAll } from '../services/ApiService';
 import { TracksContext } from '../contexts/Contexts';
 import ElevationProfile from './ElevationProfile';
