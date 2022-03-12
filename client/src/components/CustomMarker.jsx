@@ -1,5 +1,5 @@
 import React from 'react';
-import { CircleMarker, Marker } from 'react-leaflet';
+import { Marker } from 'react-leaflet';
 import './CustomMarker.css';
 
 function CustomMarker({
@@ -8,7 +8,7 @@ function CustomMarker({
   function createMarker(text) {
       if (type === 'oval') return new L.divIcon({ // eslint-disable-line
       html: `<div
-      class="marker-oval"
+      class="marker oval"
       style="background-color:${color};">
       ${text}</div>`,
       iconAnchor: [0, 0],
@@ -17,7 +17,7 @@ function CustomMarker({
 
       return new L.divIcon({ // eslint-disable-line
       html: `<div
-        class="marker-circle"
+        class="marker circle"
         style="background-color:${color};">
         ${text}</div>`,
       iconAnchor: [0, 0],

@@ -24,6 +24,7 @@ function App() {
       <div className="main-container">
         <MainContainer
           menuItem={menuItem}
+          setMenuItem={setMenuItem}
         />
       </div>
       <div className="menu-component">

@@ -4,7 +4,9 @@ import { TracksContext } from '../contexts/Contexts';
 import '../views/DrawRoute.css';
 import { coordinatesToGeoJSON } from '../tools/Helpers';
 
-function DrawRouteMenu({ myTracks, setMyTracks, setSelectedTrack }) {
+function DrawRouteMenu({
+  myTracks, setMyTracks, setSelectedTrack, setMenuItem,
+}) {
   const {
     polyline, setPolyline, showSaveForm, setShowSaveForm,
   } = useContext(TracksContext);
@@ -24,10 +26,11 @@ function DrawRouteMenu({ myTracks, setMyTracks, setSelectedTrack }) {
     trimAtCharFromBack(string, splitChar);
     trimAtCharFromBack(string, splitChar);
 
-    apiService.route(string)
+    apiService.routeMapbox(string)
       .then((data) => {
         if (data.code === 'Ok') {
-          const geojson = coordinatesToGeoJSON(data.routes[0].geometry.coordinates, event.target.input.value);
+          console.log(data);
+          const geojson = coordinatesToGeoJSON(data.routes[0].geometry.coordinates, event.target.input.value); //eslint-disable-line
 
           apiService.postRoute(geojson)
             .then((response) => {
@@ -35,6 +38,7 @@ function DrawRouteMenu({ myTracks, setMyTracks, setSelectedTrack }) {
               setSelectedTrack(response._id);
               setPolyline([]);
               setShowSaveForm(false);
+              setMenuItem('map');
             });
         }
       });

@@ -29,7 +29,7 @@ function DrawRoute({ displayedTrack }) {
         <CustomMarker
           key={index}
           position={item}
-          letter={index}
+          string={index}
           color="blue"
         />
       ))}

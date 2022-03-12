@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import L from 'leaflet';
-import Map from './MapContainer';
+import MyMapContainer from './MyMapContainer';
 import MyTracks from '../views/MyTracks';
 import Settings from '../views/Settings';
 import { getAll } from '../services/ApiService';
@@ -8,7 +8,7 @@ import { TracksContext } from '../contexts/Contexts';
 import ElevationProfile from './ElevationProfile';
 import DrawRouteMenu from './DrawRouteMenu';
 
-function MainContainer({ menuItem }) {
+function MainContainer({ menuItem, setMenuItem }) {
   const [polyline, setPolyline] = useState([]);
   const [showSaveForm, setShowSaveForm] = useState(false);
   const [myTracks, setMyTracks] = useState([]);
@@ -56,7 +56,7 @@ function MainContainer({ menuItem }) {
       )}
       { (menuItem === 'map' || menuItem === 'drawroute' || menuItem === 'enroute')
           && (
-            <Map
+            <MyMapContainer
               bounds={bounds}
               selectedTrack={selectedTrack}
               menuItem={menuItem}
@@ -80,6 +80,7 @@ function MainContainer({ menuItem }) {
            myTracks={myTracks}
            setMyTracks={setMyTracks}
            setSelectedTrack={setSelectedTrack}
+           setMenuItem={setMenuItem}
          />
          )}
     </TracksContext.Provider>

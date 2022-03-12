@@ -2,7 +2,8 @@ import GpxParser from 'gpxparser';
 
 const baseUrlDb = `http://${process.env.REACT_APP_DB_HOST}:${process.env.REACT_APP_DB_PORT}`;
 const baseUrlMapbox = 'https://api.mapbox.com/directions/v5/mapbox/walking/';
-const token = process.env.REACT_APP_MAPBOX_TOKEN;
+const baseUrlOSRM = 'http://router.project-osrm.org/match/v1/foot/';
+const mapboxToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
 export function getAll() {
   return fetch(`${baseUrlDb}/tracks`)
@@ -45,8 +46,14 @@ export function postRoute(geojson, name) {
     .catch((error) => console.error(error)); // eslint-disable-line no-console
 }
 
-export function route(coordinates) {
-  return fetch(`${baseUrlMapbox}${coordinates}?access_token=${token}&geometries=geojson`)
+export function routeMapbox(coordinates) {
+  return fetch(`${baseUrlMapbox}${coordinates}?access_token=${mapboxToken}&geometries=geojson`)
+    .then((data) => data.json())
+    .catch((error) => console.error(error)); // eslint-disable-line no-console
+}
+
+export function routeOSRM(coordinates) {
+  return fetch(`${baseUrlOSRM}${coordinates}?geometries=geojson`)
     .then((data) => data.json())
     .catch((error) => console.error(error)); // eslint-disable-line no-console
 }

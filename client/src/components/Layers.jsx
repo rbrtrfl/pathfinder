@@ -10,9 +10,9 @@ function Layers({
 }) {
   const [displayedTrack, setDisplayedTrack] = useState(null);
 
-  useEffect(async () => {
+  useEffect(() => {
     if (selectedTrack) {
-      const geojson = await findSelectedTrack(selectedTrack, myTracks);
+      const geojson = findSelectedTrack(selectedTrack, myTracks);
       setDisplayedTrack(geojson);
     }
   }, [selectedTrack]);
@@ -33,7 +33,8 @@ function Layers({
             <ShowChartIcon />
           </button>
         )}
-      {(menuItem === 'map') && (
+      {(menuItem === 'map')
+      && (
       <Map
         displayedTrack={displayedTrack}
       />
