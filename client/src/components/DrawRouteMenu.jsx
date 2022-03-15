@@ -3,6 +3,7 @@ import * as apiService from '../services/ApiService';
 import { TracksContext } from '../contexts/Contexts';
 import '../views/DrawRoute.css';
 import { coordinatesToGeoJSON } from '../tools/Helpers';
+import addElevation from '../tools/Elevation';
 
 function DrawRouteMenu({
   myTracks, setMyTracks, setSelectedTrack, setMenuItem,
@@ -27,19 +28,21 @@ function DrawRouteMenu({
     trimAtCharFromBack(string, splitChar);
 
     apiService.routeMapbox(string)
-      .then((data) => {
+      .then(async (data) => {
         if (data.code === 'Ok') {
-          console.log(data);
           const geojson = coordinatesToGeoJSON(data.routes[0].geometry.coordinates, event.target.input.value); //eslint-disable-line
+          // console.log(geojson);
+          const geojsonEle = await addElevation(geojson);
+          console.log(geojsonEle);
 
-          apiService.postRoute(geojson)
-            .then((response) => {
-              setMyTracks([...myTracks, response]);
-              setSelectedTrack(response._id);
-              setPolyline([]);
-              setShowSaveForm(false);
-              setMenuItem('map');
-            });
+          // apiService.postRoute(geojson)
+          //   .then((response) => {
+          //     setMyTracks([...myTracks, response]);
+          //     setSelectedTrack(response._id);
+          //     setPolyline([]);
+          //     setShowSaveForm(false);
+          //     setMenuItem('map');
+          //   });
         }
       });
   }

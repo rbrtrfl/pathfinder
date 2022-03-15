@@ -48,36 +48,29 @@ function EnRoute() {
 
   return (
     <div>
-      <div>
-        <Marker position={location} icon={createMarker()} />
-      </div>
-      <CircleMarker
-        center={closestPoint}
-        pathOptions={{ color: 'blue' }}
-        radius={20}
-      />
+      <Marker position={location} icon={createMarker()} />
       {destinations
-      && destinations.map((item, index) => (
-        <CustomMarker
-          key={index}
-          // flip coordinates
-          position={[item[1], item[0]]}
-          string={item[2]}
-          color="purple"
-          type="oval"
-        />
-      ))}
+        && destinations.map((item, index) => (
+          <CustomMarker
+            key={index}
+            // flip coordinates
+            position={[item[1], item[0]]}
+            string={item[2]}
+            color="purple"
+            type="oval"
+          />
+        ))}
       {(pastTrack
-        && <Polyline pathOptions={{ color: 'purple', dashArray: '5,10' }} positions={pastTrack} />
-        )}
+          && <Polyline pathOptions={{ color: 'purple', dashArray: '5,10' }} positions={pastTrack} />
+          )}
       {(futureGeoJSON
-        && (
-        <Track
-          geojson={futureGeoJSON}
-          color="purple"
-        />
-        )
-        )}
+          && (
+          <Track
+            geojson={futureGeoJSON}
+            color="purple"
+          />
+          )
+          )}
     </div>
   );
 }

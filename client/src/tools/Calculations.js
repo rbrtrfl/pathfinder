@@ -68,7 +68,6 @@ function getDestinations(geojson) {
       intervalCounter += interval;
     }
   }
-  console.log(destinations);
   return destinations;
 }
 
