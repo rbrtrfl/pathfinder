@@ -41,18 +41,18 @@ function getTime(timeDecimal) {
   return time;
 }
 
-function getDestinations(geojson) {
+function getDestinations(geojson, interval, iterations) {
   const { features } = geojson;
   const locationsFlat = features.map(({ geometry }) => geometry.coordinates.map((c) => [c[0], c[1]])).flat(); //eslint-disable-line
   // console.log(locationsFlat);
   const elevations = features.map(({ geometry }) => geometry.coordinates.map((c) => c[2])).flat();
-  // console.log(elevations);
   const { length } = elevations;
+  // console.log(elevations);
   const destinations = [];
-  const interval = 1;
   let intervalCounter = interval;
+  let round = 0;
 
-  for (let i = 0; i < length - 3; i++) {
+  for (let i = 0; i < length - 3 && round < iterations; i++) {
     const elesSection = elevations.slice(0, i + 2);
     // console.log(elesSection);
     const distanceTime = getFlatTime(locationsFlat.slice(0, i + 2));
@@ -63,10 +63,18 @@ function getDestinations(geojson) {
     // console.log('descent time: ', descentTime);
     const totalTime = getTotalTime(distanceTime, ascentTime, descentTime);
     if (totalTime >= intervalCounter) {
-      // console.log('total time: ', totalTime);
-      destinations.push([locationsFlat[i + 1][0], locationsFlat[i + 1][1], getTime(totalTime)]);
+      console.log('total time: ', totalTime);
+      destinations.push([locationsFlat[i + 1][0], locationsFlat[i + 1][1], getTime(totalTime), i]);
       intervalCounter += interval;
+      round += 1;
     }
+  }
+  if (destinations.length === 0) {
+    const distanceTime = getFlatTime(locationsFlat);
+    const ascentTime = getAscentTime(elevations);
+    const descentTime = getDescentTime(elevations);
+    const totalTime = getTotalTime(distanceTime, ascentTime, descentTime);
+    destinations.push([locationsFlat[length - 1][0], locationsFlat[length - 1][1], getTime(totalTime), length - 1]);
   }
   return destinations;
 }

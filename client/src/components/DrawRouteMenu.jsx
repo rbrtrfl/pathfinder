@@ -3,7 +3,7 @@ import * as apiService from '../services/ApiService';
 import { TracksContext } from '../contexts/Contexts';
 import '../views/DrawRoute.css';
 import { coordinatesToGeoJSON } from '../tools/Helpers';
-import addElevation from '../tools/Elevation';
+import addElevation from '../tools/AddElevationData';
 
 function DrawRouteMenu({
   myTracks, setMyTracks, setSelectedTrack, setMenuItem,
