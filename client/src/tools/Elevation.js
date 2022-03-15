@@ -16,7 +16,7 @@ async function addElevation(geojson) {
   const mutatedGeoJSON = geojson;
   mutatedGeoJSON.features = await Promise.all(geojson.features.map(async (feature) => {
     const featureCopy = feature;
-    featureCopy.geometry.coordinates = await Promise.all(feature.geometry.coordinates.map(async (coordinate, index) =>[
+    featureCopy.geometry.coordinates = await Promise.all(feature.geometry.coordinates.map(async (coordinate, index) => [
       coordinate[0],
       coordinate[1],
       await getElevation(coordinate),

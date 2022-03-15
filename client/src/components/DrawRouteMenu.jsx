@@ -25,24 +25,20 @@ function DrawRouteMenu({
       string = revString.slice(pos + 1, revString.length).split('').reverse().join('');
     }
     trimAtCharFromBack(string, splitChar);
-    trimAtCharFromBack(string, splitChar);
 
     apiService.routeMapbox(string)
       .then(async (data) => {
         if (data.code === 'Ok') {
           const geojson = coordinatesToGeoJSON(data.routes[0].geometry.coordinates, event.target.input.value); //eslint-disable-line
-          // console.log(geojson);
           const geojsonEle = await addElevation(geojson);
-          console.log(geojsonEle);
-
-          // apiService.postRoute(geojson)
-          //   .then((response) => {
-          //     setMyTracks([...myTracks, response]);
-          //     setSelectedTrack(response._id);
-          //     setPolyline([]);
-          //     setShowSaveForm(false);
-          //     setMenuItem('map');
-          //   });
+          apiService.postTrack(geojsonEle)
+            .then((response) => {
+              setMyTracks([...myTracks, response]);
+              setSelectedTrack(response._id);
+              setPolyline([]);
+              setShowSaveForm(false);
+              setMenuItem('map');
+            });
         }
       });
   }

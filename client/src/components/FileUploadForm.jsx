@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { postTrack } from '../services/ApiService';
 import { TracksContext } from '../contexts/Contexts';
+import GpxParser from 'gpxparser';
 
 function FileUploadForm() {
   const { myTracks, setMyTracks } = useContext(TracksContext);
@@ -11,7 +12,9 @@ function FileUploadForm() {
     const reader = new FileReader();
     reader.readAsBinaryString(file);
     reader.addEventListener('loadend', (data) => {
-      postTrack(data.currentTarget.result)
+      const gpx = new GpxParser();
+      gpx.parse(data.currentTarget.result);
+      postTrack(gpx.toGeoJSON())
         .then((dbResponse) => setMyTracks([...myTracks, dbResponse]));
     });
   // TODO: form reset

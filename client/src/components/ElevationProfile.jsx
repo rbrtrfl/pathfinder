@@ -12,8 +12,9 @@ function ElevationProfile({ selectedTrack, myTracks }) {
       const result = myTracks.find((element) => element._id === selectedTrack);
       const coordsFlat = result.geojson.features.map((element) => element.geometry.coordinates).flat(); //eslint-disable-line
 
-      // redece array to fixed length
-      const step = Math.ceil(coordsFlat.length / 200);
+      // reduce array to fixed length
+      // TODO: reduce points without losing relevant data
+      const step = Math.ceil(coordsFlat.length / 500);
       const coordFlatSmall = [];
       for (let i = 0; i < coordsFlat.length; i + step) {
         coordFlatSmall.push(coordsFlat[i]);
@@ -36,8 +37,8 @@ function ElevationProfile({ selectedTrack, myTracks }) {
       const rechartData = [];
       for (let i = 0; i < coordFlatSmall.length - 1; i++) {
         rechartData.push({
-          length: lengthSums[i].toFixed(1),
-          elevation: coordsFlat[i][2].toFixed(0),
+          length: Number(lengthSums[i].toFixed(1)),
+          elevation: Number(coordsFlat[i][2].toFixed(0)),
         });
       }
       return rechartData;
@@ -51,8 +52,8 @@ function ElevationProfile({ selectedTrack, myTracks }) {
   return (
     <div className="elevation-container">
       <AreaChart
-        width={window.innerWidth}
-        height={((window.innerHeight / 100) * 20)}
+        width={window.innerWidth * 0.95}
+        height={window.innerHeight * 0.2 * 0.95}
         data={data}
       >
         <Area type="monotone" dataKey="elevation" stroke="white" strokeWidth={3} fillOpacity={1} fill="grey" />
