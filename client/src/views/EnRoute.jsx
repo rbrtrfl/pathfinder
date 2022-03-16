@@ -13,15 +13,15 @@ function EnRoute() {
   const { selectedTrack, myTracks } = useContext(TracksContext);
 
   const location = [46.880946592687366, 8.997399356476118];
-  const endHikingTime = '22:00';
-  const startHikingTime = '07:00';
-  const breakTime = 0.2;
-  const hikingDuration = 8;
+
 
   const [pastTrack, setPastTrack] = useState(null);
   const [todaysGeoJSON, setTodaysGeoJSON] = useState(null);
+  const [afterTmrwGeoJSON, setAfterTmrwGeoJSON] = useState(null);
   const [destinations, setDestinations] = useState(null);
   const [futureDailyGeoJSON, setFutureDailyGeoJSON] = useState([]);
+
+  const [testMarker, setTestMarker] = useState(null);
 
   useEffect(() => {
     if (selectedTrack) {
@@ -36,25 +36,33 @@ function EnRoute() {
       const futureGeoJSON = coordinatesToGeoJSON(geometryFlat.slice(closest));
 
       const remainingTimeToday = moment(Date.now()); // TODO: calcualate remaining hiking time
-      const todaysTrackEnd = getDestinations(futureGeoJSON, 3, 1);
+      const todaysTrackEnd = getDestinations(futureGeoJSON, 3, 1)[0][3];
 
-      setTodaysGeoJSON(coordinatesToGeoJSON(geometryFlat.slice(closest, closest + todaysTrackEnd[0][3] - 1)));
+      setTestMarker(points[todaysTrackEnd]);
+      // 0: 8.994881
+      // 1: 46.864978
 
-      const afterTomorrowGeoJSON = coordinatesToGeoJSON(geometryFlat.slice(todaysTrackEnd[0][3]));
+      setTodaysGeoJSON(coordinatesToGeoJSON(geometryFlat.slice(closest, todaysTrackEnd - 1)));
 
-      const daySplitLocations = getDestinations(afterTomorrowGeoJSON, hikingDuration, Infinity);
-      console.log(daySplitLocations.length);
-      console.log(daySplitLocations[0][3]);
+      const afterTomorrowGeoJSON = coordinatesToGeoJSON(geometryFlat.slice(todaysTrackEnd - 1));
+      setAfterTmrwGeoJSON(afterTomorrowGeoJSON);
 
-      let startPoint = closest + todaysTrackEnd[0][3] - 1;
+      const daySplitLocations = getDestinations(afterTomorrowGeoJSON, hikingDuration);
+      console.log(daySplitLocations);
+
+      let startPoint = todaysTrackEnd;
       console.log(startPoint);
+
+      const futureGeoJSONs = [];
       for (let i = 0; i < daySplitLocations.length; i++) {
-        console.log(coordinatesToGeoJSON(geometryFlat.slice(startPoint, startPoint + daySplitLocations[i][3])));
-        setFutureDailyGeoJSON([...futureDailyGeoJSON, coordinatesToGeoJSON(geometryFlat.slice(startPoint, startPoint + daySplitLocations[i][3]))]);
-        startPoint += daySplitLocations[i][3];
-        console.log(i);
+        console.log(daySplitLocations[i][3]);
+        console.log(coordinatesToGeoJSON(geometryFlat.slice(startPoint, startPoint + daySplitLocations[i][3] - 1)));
+        const section = coordinatesToGeoJSON(geometryFlat.slice(startPoint, startPoint + daySplitLocations[i][3] - 1));
+        startPoint += daySplitLocations[i][3] - 1;
+        setFutureDailyGeoJSON([...futureDailyGeoJSON, section]);
         console.log(futureDailyGeoJSON);
       }
+      // console.log(futureGeoJSONs);
 
     // setDestinations(getDestinations(futureGeoJSON));
     }
@@ -73,6 +81,18 @@ function EnRoute() {
   return (
     <div>
       <Marker position={location} icon={createMarker()} />
+
+      {testMarker
+      && <Marker position={testMarker} />}
+
+      {/* {(afterTmrwGeoJSON
+    && (
+    <Track
+      geojson={afterTmrwGeoJSON}
+      color="green"
+    />
+    )
+    )} */}
       {destinations
         && destinations.map((item, index) => (
           <CustomMarker
@@ -95,7 +115,7 @@ function EnRoute() {
           />
           )
           )}
-      {(futureDailyGeoJSON
+      {/* {(futureDailyGeoJSON
           && futureDailyGeoJSON.map((geojson, index) => (
             <Track
               key={index}
@@ -103,7 +123,7 @@ function EnRoute() {
               color={colors.index}
             />
           ))
-          )}
+          )} */}
     </div>
   );
 }
