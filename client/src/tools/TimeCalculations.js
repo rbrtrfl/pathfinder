@@ -43,23 +43,22 @@ function getTime(timeDecimal) {
 
 function getDestinations(geojson) {
   // -3. set interval, hiking day start time, hiking day end time
-  let endHikingTime = moment().hour(21);
-  const startHikingTime = '07:00';
+  let endHikingTime = moment().hour(22);
+  let startHikingTime = moment();
+  let isToday = true;
   const breakTime = 0.2;
   const interval = 1;
+  let intervalCounter = interval;
   const splitTrack = {
     sections: [],
     locations: [],
   };
 
   // -2. create color array
-  const colors = ['purple', 'cyan', 'yellow', 'magenta'];
+  const colors = ['purple', 'darkcyan', 'yellow', 'magenta'];
 
   // -1. select first item in color array
   let color = 0;
-
-  // 0. set start time to current time
-  const startTime = Date.now;
 
   // 1. start with future geoJSON
   const { features } = geojson;
@@ -68,10 +67,7 @@ function getDestinations(geojson) {
   // console.log(positionsFlat);
   const elevationsFlat = features.map(({ geometry }) => geometry.coordinates.map((c) => c[2])).flat(); //eslint-disable-line
   const { length } = elevationsFlat;
-  console.log(length);
   // console.log(elevationsFlat);
-  const intervalCounter = interval;
-  const round = 0;
 
   // 2. create sections (0-1, 0-2, 0-3, ...)
   // 3. loop through sections and determine hiking time HH:mm for each section
@@ -89,14 +85,13 @@ function getDestinations(geojson) {
     // 4. if at last section in list
     //   -> return remaining track with color
     //   -> return last location with timestamp and color
-    // positionsFlat[length - 1].map((point) => [point[1], point[0]])
+
+    // add last marker
     if (i === length - 4) {
-      console.log('i === length - 4');
       splitTrack.sections.push({
         positions: positionsFlat.slice(polyLineStartIndex),
         color: colors[color],
       });
-      console.log(splitTrack);
       splitTrack.locations.push({
         position: positionsFlat[length - 1],
         time: getTime(totalTime),
@@ -107,33 +102,50 @@ function getDestinations(geojson) {
     // 5. if hiking time HH:mm > {hiking day end time} HH:mm
     //   -> split track at location
     //   -> return track with color
-    //   -> return location with HH:Mmm timestamp and color
+    //   -> return location with HH:mm timestamp and color
     //   -> change color
     //   -> set start time to {hiking day start time}
-    // console.log(moment().hour(9));
 
     const ms = moment.duration(totalTime, 'hours').asMilliseconds();
-    const time = moment(Date.now() + ms);
-
+    const time = moment(startHikingTime + ms);
+    // split track into days
     if (time > endHikingTime) {
-      console.log(time._d);
+      console.log('day split');
       splitTrack.sections.push({
         positions: positionsFlat.slice(polyLineStartIndex, i + 2),
         color: colors[color],
       });
       splitTrack.locations.push({
-        position: positionsFlat[length - 1],
+        position: positionsFlat[i + 2],
         time: getTime(totalTime),
         color: colors[color],
       });
       polyLineStartIndex = i + 2;
-      color += color;
+      color += 1;
       endHikingTime = endHikingTime.add(1, 'day');
-      console.log(endHikingTime._d);
+      if (isToday) {
+        startHikingTime = moment({ hour: 7 }).add(1, 'day');
+        isToday = false;
+      } else startHikingTime = startHikingTime.add(1, 'day');
     }
 
     // 6. if hiking time HH:mm > start time HH:mm plus set interval {
     //   -> return location with HH:mm timestamp and color
+
+    // populate markers
+    if (time > startHikingTime.add(intervalCounter, 'hour')) {
+      console.log('hourly');
+      splitTrack.sections.push({
+        positions: positionsFlat.slice(polyLineStartIndex, i + 2),
+        color: colors[color],
+      });
+      splitTrack.locations.push({
+        position: positionsFlat[i + 2],
+        time: getTime(totalTime),
+        color: colors[color],
+      });
+      intervalCounter += interval;
+    }
 
     // if (totalTime >= intervalCounter) {
     //   // console.log('total time: ', totalTime);
