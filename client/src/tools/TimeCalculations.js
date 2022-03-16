@@ -43,12 +43,12 @@ function getTime(timeDecimal) {
 
 function getDestinations(geojson) {
   // -3. set interval, hiking day start time, hiking day end time
-  const endHikingTime = '22:00';
+  let endHikingTime = moment().hour(21);
   const startHikingTime = '07:00';
   const breakTime = 0.2;
   const interval = 1;
-  const result = {
-    polylines: [],
+  const splitTrack = {
+    sections: [],
     locations: [],
   };
 
@@ -59,63 +59,90 @@ function getDestinations(geojson) {
   let color = 0;
 
   // 0. set start time to current time
-  let startTime = Date.now;
+  const startTime = Date.now;
 
   // 1. start with future geoJSON
   const { features } = geojson;
-  const locationsFlat = features.map(({ geometry }) => geometry.coordinates.map((c) => [c[0], c[1]])).flat(); //eslint-disable-line
-  // console.log(locationsFlat);
+  const positionsFlat = features.map(({ geometry }) => geometry.coordinates.map((c) => [c[0], c[1]])).flat(); //eslint-disable-line
+  let polyLineStartIndex = 0;
+  // console.log(positionsFlat);
   const elevationsFlat = features.map(({ geometry }) => geometry.coordinates.map((c) => c[2])).flat(); //eslint-disable-line
   const { length } = elevationsFlat;
+  console.log(length);
   // console.log(elevationsFlat);
-  const destinations = [];
-  let intervalCounter = interval;
-  let round = 0;
+  const intervalCounter = interval;
+  const round = 0;
 
   // 2. create sections (0-1, 0-2, 0-3, ...)
   // 3. loop through sections and determine hiking time HH:mm for each section
-  for (let i = 0; i < length - 2 && round < iterations; i++) {
+  for (let i = 0; i < length - 3; i += 1) {
     const elesSection = elevationsFlat.slice(0, i + 2);
     // console.log(elesSection);
-    const distanceTime = getFlatDuration(locationsFlat.slice(0, i + 2));
+    const distanceTime = getFlatDuration(positionsFlat.slice(0, i + 2));
     // console.log('distance time: ', distanceTime);
     const ascentTime = getAscentDuration(elesSection);
     // console.log('ascent time: ', ascentTime);
     const descentTime = getDescentDuration(elesSection);
     // console.log('descent time: ', descentTime);
     const totalTime = getTotalDuration(distanceTime, ascentTime, descentTime);
-    if (totalTime >= intervalCounter) {
-      // console.log('total time: ', totalTime);
-      destinations.push([locationsFlat[i + 1][0], locationsFlat[i + 1][1], getTime(totalTime), i]);
-      intervalCounter += interval;
-      round += 1;
+
+    // 4. if at last section in list
+    //   -> return remaining track with color
+    //   -> return last location with timestamp and color
+    // positionsFlat[length - 1].map((point) => [point[1], point[0]])
+    if (i === length - 4) {
+      console.log('i === length - 4');
+      splitTrack.sections.push({
+        positions: positionsFlat.slice(polyLineStartIndex),
+        color: colors[color],
+      });
+      console.log(splitTrack);
+      splitTrack.locations.push({
+        position: positionsFlat[length - 1],
+        time: getTime(totalTime),
+        color: colors[color],
+      });
     }
-  }
-  if (destinations.length === 0) {
-    const distanceTime = getFlatTime(locationsFlat);
-    const ascentTime = getAscentTime(elevationsFlat);
-    const descentTime = getDescentTime(elevationsFlat);
-    const totalTime = getTotalTime(distanceTime, ascentTime, descentTime);
-    destinations.push([locationsFlat[length - 1][0], locationsFlat[length - 1][1], getTime(totalTime), length - 1]);
-  }
-  return destinations;
-  // 4. if at last section in list {
-  //   -> return last location with timestamp and color
-  // }
-  // 5. if hiking time HH:mm > {hiking day end time} HH:mm {
-  //   -> split track at location
-  //   -> return track with color
-  //   -> return location with HH:Mmm timestamp and color
-  //   -> change color
-  //   -> set start time to {hiking day start time}
-  // }
-  // 6. if hiking time HH:mm > start time HH:mm plus set interval {
-  //   -> return location with HH:mm timestamp and color
 
+    // 5. if hiking time HH:mm > {hiking day end time} HH:mm
+    //   -> split track at location
+    //   -> return track with color
+    //   -> return location with HH:Mmm timestamp and color
+    //   -> change color
+    //   -> set start time to {hiking day start time}
+    // console.log(moment().hour(9));
 
+    const ms = moment.duration(totalTime, 'hours').asMilliseconds();
+    const time = moment(Date.now() + ms);
+
+    if (time > endHikingTime) {
+      console.log(time._d);
+      splitTrack.sections.push({
+        positions: positionsFlat.slice(polyLineStartIndex, i + 2),
+        color: colors[color],
+      });
+      splitTrack.locations.push({
+        position: positionsFlat[length - 1],
+        time: getTime(totalTime),
+        color: colors[color],
+      });
+      polyLineStartIndex = i + 2;
+      color += color;
+      endHikingTime = endHikingTime.add(1, 'day');
+      console.log(endHikingTime._d);
+    }
+
+    // 6. if hiking time HH:mm > start time HH:mm plus set interval {
+    //   -> return location with HH:mm timestamp and color
+
+    // if (totalTime >= intervalCounter) {
+    //   // console.log('total time: ', totalTime);
+    //   destinations.push([positionsFlat[i + 1][0], positionsFlat[i + 1][1], getTime(totalTime), i]);
+    //   intervalCounter += interval;
+    //   round += 1;
+    // }
+  }
+  return splitTrack;
 }
 
 export default getDestinations;
-
-
-}
