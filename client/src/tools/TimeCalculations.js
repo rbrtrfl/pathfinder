@@ -43,8 +43,11 @@ function getTime(timeDecimal) {
 
 function getDestinations(geojson) {
   // -3. set interval, hiking day start time, hiking day end time
-  let endHikingTime = moment().hour(22);
-  let startHikingTime = moment();
+  let endHikingTime = new Date();
+  endHikingTime.setHours(23);
+  console.log(endHikingTime);
+  let startHikingTime = Date.now();
+  console.log(startHikingTime);
   let isToday = true;
   const breakTime = 0.2;
   const interval = 1;
@@ -55,7 +58,7 @@ function getDestinations(geojson) {
   };
 
   // -2. create color array
-  const colors = ['purple', 'darkcyan', 'yellow', 'magenta'];
+  const colors = ['purple', 'darkcyan', 'magenta', 'green'];
 
   // -1. select first item in color array
   let color = 0;
@@ -106,52 +109,49 @@ function getDestinations(geojson) {
     //   -> change color
     //   -> set start time to {hiking day start time}
 
-    const ms = moment.duration(totalTime, 'hours').asMilliseconds();
-    const time = moment(startHikingTime + ms);
+    // console.log(i);
+    // const ms = moment.duration(totalTime, 'hours').asMilliseconds();
+    // const time = moment(startHikingTime + ms);
+    // console.log(time._d);
+    // console.log(endHikingTime._d);
+
     // split track into days
-    if (time > endHikingTime) {
-      console.log('day split');
-      splitTrack.sections.push({
-        positions: positionsFlat.slice(polyLineStartIndex, i + 2),
-        color: colors[color],
-      });
-      splitTrack.locations.push({
-        position: positionsFlat[i + 2],
-        time: getTime(totalTime),
-        color: colors[color],
-      });
-      polyLineStartIndex = i + 2;
-      color += 1;
-      endHikingTime = endHikingTime.add(1, 'day');
-      if (isToday) {
-        startHikingTime = moment({ hour: 7 }).add(1, 'day');
-        isToday = false;
-      } else startHikingTime = startHikingTime.add(1, 'day');
-    }
+    // if (time > endHikingTime) {
+    //   console.log('day split');
+    //   splitTrack.sections.push({
+    //     positions: positionsFlat.slice(polyLineStartIndex, i + 2),
+    //     color: colors[color],
+    //   });
+    //   splitTrack.locations.push({
+    //     position: positionsFlat[i + 2],
+    //     time: getTime(totalTime),
+    //     color: colors[color],
+    //   });
+
+    //   polyLineStartIndex = i + 2;
+    //   color += 1;
+    //   endHikingTime.add(1, 'days');
+
+    //   if (isToday) {
+    //     startHikingTime = moment().hour(7).add(1, 'day');
+    //     isToday = false;
+    //   } else {
+    //     startHikingTime = startHikingTime.add(1, 'day');
+    //   }
+    // }
 
     // 6. if hiking time HH:mm > start time HH:mm plus set interval {
     //   -> return location with HH:mm timestamp and color
 
     // populate markers
-    if (time > startHikingTime.add(intervalCounter, 'hour')) {
-      console.log('hourly');
-      splitTrack.sections.push({
-        positions: positionsFlat.slice(polyLineStartIndex, i + 2),
-        color: colors[color],
-      });
-      splitTrack.locations.push({
-        position: positionsFlat[i + 2],
-        time: getTime(totalTime),
-        color: colors[color],
-      });
-      intervalCounter += interval;
-    }
-
-    // if (totalTime >= intervalCounter) {
-    //   // console.log('total time: ', totalTime);
-    //   destinations.push([positionsFlat[i + 1][0], positionsFlat[i + 1][1], getTime(totalTime), i]);
+    // if (time > startHikingTime.add(intervalCounter, 'hour')) {
+    //   console.log('hourly');
+    //   splitTrack.locations.push({
+    //     position: positionsFlat[i + 2],
+    //     time: getTime(totalTime),
+    //     color: colors[color],
+    //   });
     //   intervalCounter += interval;
-    //   round += 1;
     // }
   }
   return splitTrack;
