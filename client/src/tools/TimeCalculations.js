@@ -35,19 +35,18 @@ function getTotalDuration(distanceTime, ascentTime, descentTime) {
   } return (distanceTime + (ascentTime + descentTime) / 2);
 }
 
-function getTime(timeDecimal) {
-  const ms = moment.duration(timeDecimal, 'hours').asMilliseconds();
-  const time = moment(Date.now() + ms).format('HH:mm');
-  return time;
+function getTime(momentInTime) {
+  return moment(momentInTime).format('HH:mm');
 }
 
 function getDestinations(geojson) {
   // -3. set interval, hiking day start time, hiking day end time
-  let endHikingTime = new Date();
-  endHikingTime.setHours(23);
-  console.log(endHikingTime);
-  let startHikingTime = Date.now();
-  console.log(startHikingTime);
+  let endHikingTime = moment().hour(11).minute(0);
+  console.log('endHikingTime: ', endHikingTime._d);
+  let startHikingTime = moment();
+  console.log('startHikingTime: ', startHikingTime._d);
+  let momentInTime;
+
   let isToday = true;
   const breakTime = 0.2;
   const interval = 1;
@@ -85,10 +84,16 @@ function getDestinations(geojson) {
     // console.log('descent time: ', descentTime);
     const totalTime = getTotalDuration(distanceTime, ascentTime, descentTime);
 
+    // console.log(i);
+    // const ms = moment.duration(totalTime, 'hours').asMilliseconds();
+    momentInTime = moment(startHikingTime).add(totalTime, 'hours');
+    console.log('startHikingTime: ', startHikingTime.format('Do, HH:mm:ss'));
+    console.log('momentInTime: ', momentInTime.format('Do, HH:mm:ss'));
+    console.log('endHikingTime: ', endHikingTime.format('Do, HH:mm:ss'));
+
     // 4. if at last section in list
     //   -> return remaining track with color
     //   -> return last location with timestamp and color
-
     // add last marker
     if (i === length - 4) {
       splitTrack.sections.push({
@@ -97,7 +102,7 @@ function getDestinations(geojson) {
       });
       splitTrack.locations.push({
         position: positionsFlat[length - 1],
-        time: getTime(totalTime),
+        time: getTime(momentInTime),
         color: colors[color],
       });
     }
@@ -108,51 +113,45 @@ function getDestinations(geojson) {
     //   -> return location with HH:mm timestamp and color
     //   -> change color
     //   -> set start time to {hiking day start time}
-
-    // console.log(i);
-    // const ms = moment.duration(totalTime, 'hours').asMilliseconds();
-    // const time = moment(startHikingTime + ms);
-    // console.log(time._d);
-    // console.log(endHikingTime._d);
-
     // split track into days
-    // if (time > endHikingTime) {
-    //   console.log('day split');
-    //   splitTrack.sections.push({
-    //     positions: positionsFlat.slice(polyLineStartIndex, i + 2),
-    //     color: colors[color],
-    //   });
-    //   splitTrack.locations.push({
-    //     position: positionsFlat[i + 2],
-    //     time: getTime(totalTime),
-    //     color: colors[color],
-    //   });
+    if (momentInTime > endHikingTime) {
+      console.error('day split');
+      splitTrack.sections.push({
+        positions: positionsFlat.slice(polyLineStartIndex, i + 2),
+        color: colors[color],
+      });
+      splitTrack.locations.push({
+        position: positionsFlat[i + 2],
+        time: getTime(momentInTime),
+        color: colors[color],
+      });
 
-    //   polyLineStartIndex = i + 2;
-    //   color += 1;
-    //   endHikingTime.add(1, 'days');
+      polyLineStartIndex = i + 2;
+      color += 1;
+      endHikingTime = moment(endHikingTime).add(1, 'day');
+      // console.log('endHikingTime: ', endHikingTime._d);
 
-    //   if (isToday) {
-    //     startHikingTime = moment().hour(7).add(1, 'day');
-    //     isToday = false;
-    //   } else {
-    //     startHikingTime = startHikingTime.add(1, 'day');
-    //   }
-    // }
+      if (isToday) {
+        startHikingTime.hour(7).minute(0).add(1, 'day');
+        isToday = false;
+      } else {
+        startHikingTime = moment().hour(7).minute(0).add(1, 'day');
+      }
+    }
 
     // 6. if hiking time HH:mm > start time HH:mm plus set interval {
     //   -> return location with HH:mm timestamp and color
 
     // populate markers
-    // if (time > startHikingTime.add(intervalCounter, 'hour')) {
-    //   console.log('hourly');
-    //   splitTrack.locations.push({
-    //     position: positionsFlat[i + 2],
-    //     time: getTime(totalTime),
-    //     color: colors[color],
-    //   });
-    //   intervalCounter += interval;
-    // }
+    if (momentInTime > moment(startHikingTime).add(intervalCounter, 'hour')) {
+      console.log('hourly');
+      splitTrack.locations.push({
+        position: positionsFlat[i + 2],
+        time: getTime(momentInTime),
+        color: colors[color],
+      });
+      intervalCounter += interval;
+    }
   }
   return splitTrack;
 }
