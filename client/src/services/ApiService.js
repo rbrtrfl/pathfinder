@@ -11,11 +11,17 @@ export function getAll() {
 
 export function postTrack(file) {
   const dbEntry = {
-    geojson: file,
+    geojson: {
+      properties: {
+        name: file.features[0].properties.name,
+      },
+    },
   };
-  if (!dbEntry.geojson.properties.name) {
-    dbEntry.geojson.properties.name = dbEntry.geojson.features[0].properties.name;
-  }
+  Object.assign(dbEntry.geojson, file);
+  console.log(dbEntry);
+  // if (!dbEntry.geojson.properties.name) {
+  //   dbEntry.geojson.properties.name = dbEntry.geojson.features[0].properties.name;
+  // }
   return fetch(`${baseUrlDb}/tracks`, {
     method: 'POST',
     headers: {
