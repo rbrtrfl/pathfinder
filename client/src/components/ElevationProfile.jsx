@@ -38,7 +38,7 @@ function ElevationProfile({ selectedTrack, myTracks }) {
       for (let i = 0; i < coordFlatSmall.length - 1; i++) {
         rechartData.push({
           length: Number(lengthSums[i].toFixed(1)),
-          elevation: Number(coordsFlat[i][2].toFixed(0)),
+          elevation: parseInt(coordsFlat[i][2]),
         });
       }
       return rechartData;
