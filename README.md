@@ -1,56 +1,75 @@
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
-# pathfinder
+# Pathfinder
+
+<p align="center">
+  <img src="images/Pathfinder_Logo.png" width="200"/>
+</p>
 
 Plan your hiking adventures, multi-day-hikes and through-hikes and organize upcoming hiking days according to your progress.
 
-## Main Menu
 
-### Map
-Explore your surroundings through zooming and panning. There are five different tile layers to chose from (top right button):
-- Thunderforest Landscape
-- Open Topo Map
-- Esri World Imagery
-- Swiss Federal Geoportal - National Mao Color
-- Swiss Federal Geoportal - Swissimage
+## Screenshots
 
-### My Tracks
-Display a list of your tracks with detailed information. You can select a track to display it on the map. The form allows you to upload tracks from your device in gpx file format.
+<p align="center">
+  <img src="images/Pathfinder_Screenshots_iPhone.png" />
+</p>
 
-### En Route
-*En Route* is the core component of pathfinder. It tracks your current location and finds its closest point on an active track. Since tracks have a direction, the track visually divided into two sections: the finished and the upcoming section. On the upcoming section, markers indicate the estimated time of arrival in a given interval.
-*En Route* requires a track from your *My Tracks* lis to be selected.
+## Getting Started
 
-### Draw
-Plan new tracks. Draw a route with multiple waypoints and convert it into a track, following mapped paths. The new track is automatically added to *My Tracks*.
+1. Clone this repo.
 
-### Settings
-Adjust settings for *En Route*. Define start and end of each hiking day and a buffer for breaks. Those settings will affect the markers in *En Route*.
-Show the functinctionality of *En Route* to your friends without the need of your current location.
+    ```bash
+    git clone https://github.com/rbrtrfl/pathfinder
+    ```
 
-## Dev Info
+2. Install dependencies in root, server and client folder
 
-The app uses React on the front end and Express on the back end. You need a MongoDB database running. Example gpx Tracks can be found in the /gpx folder. EsLint configuration files are present in both `client`and `server`folder.
-To get started, run `npm i` inside the root, client and server folder. Run `nodemon`inside the server folder to start the back end. Run `npm start` inside the client folder to start the front end.
+    ```bash
+    npm install
+    ```
 
-### .env file example *client*
+3. Create .env file in client folder
 
-```
-REACT_APP_MAPBOX_TOKEN=
-REACT_APP_THUNDERFOREST_TOKEN=
-REACT_APP_DB_HOST=
-REACT_APP_DB_PORT=
-```
+    ```bash
+    REACT_APP_MAPBOX_TOKEN=
+    REACT_APP_THUNDERFOREST_TOKEN=
+    REACT_APP_DB_HOST=
+    REACT_APP_DB_PORT=
+    ```
 
-### .env file example *server*
+4. Create .env file in server folder
 
-```
-DB_HOST=
-DB_PORT=
-DB_PASS=
-DB_USER=
+    ```bash
+    DB_HOST=
+    DB_PORT=
+    DB_PASS=
+    DB_USER=
+    EXPRESS_HOST=
+    EXPRESS_PORT=
+    ```
 
-EXPRESS_HOST=
-EXPRESS_PORT=
+5. Install [MongoDB](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/#installing-mongodb-5.0-edition-edition) on your machine
 
-```
+5. Start the server. From the server folder, run
+
+    ```bash
+    npx nodemon
+    ```
+
+6. Start the client. From the client folder, run
+
+    ```bash
+    npm start
+    ```
+    
+7. Example gpx Tracks can be found in the /gpx folder.
+
+## Tech Stack
+
+* [React](https://reactjs.org/)
+* [Leaflet](https://leafletjs.com/)
+* [Node.js](https://nodejs.org/)
+* [Express](https://expressjs.com/)
+* [MongoDB](https://www.mongodb.com/)
+* [Mongoose](https://mongoosejs.com/)

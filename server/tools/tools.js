@@ -1,7 +1,17 @@
 const turf = require('@turf/turf');
 
 function addMetadata(body) {
-  const result = body;
+  const result = {
+    properties: {
+      name: null,
+      desc: null,
+      author: {
+        name: null,
+      },
+    },
+  };
+  Object.assign(result, body);
+  console.log(result);
   result.geojson.properties.distance = { total: turf.length(body.geojson, { units: 'kilometers' }) };
   const { features } = body.geojson;
 
